@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
-    "db:seed": "bun run ./db/seed.ts",
+    "db:seed": "bun run ./app/db/seed.ts",
     "db:push": "pnpm drizzle-kit push",
     "db:generate": "pnpm drizzle-kit generate",
     "db:studio": "pnpm drizzle-kit studio",
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@libsql/client": "^0.14.0",
+    "@tanstack/react-query": "^5.62.8",
     "@tanstack/react-router": "^1.91.3",
     "@tanstack/start": "^1.91.3",
     "drizzle-orm": "^0.38.2",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
+    "@tanstack/react-query-devtools": "^5.62.8",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.3.4",
@@ -37,6 +39,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.1"
+    "typescript-eslint": "^8.18.1",
+    "unenv": "^1.10.0"
   }
 }

@@ -42,3 +42,5 @@ next-env.d.ts
 .vscode
 local.db
 count.txt
+.output
+.vinxi

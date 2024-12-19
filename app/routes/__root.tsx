@@ -7,6 +7,8 @@ import {
 } from '@tanstack/react-router'
 import { Meta, Scripts } from '@tanstack/start'
 
+import { Providers } from '@/components/providers'
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -28,7 +30,9 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      <Providers>
+        <Outlet />
+      </Providers>
     </RootDocument>
   )
 }

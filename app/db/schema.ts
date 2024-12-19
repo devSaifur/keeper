@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm'
+import { InferSelectModel, relations, sql } from 'drizzle-orm'
 import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const userTable = sqliteTable('user', {
@@ -29,3 +29,5 @@ export const noteRelations = relations(noteTable, ({ one }) => ({
     references: [userTable.id]
   })
 }))
+
+export type Note = InferSelectModel<typeof noteTable>

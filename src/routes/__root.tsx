@@ -1,10 +1,13 @@
 import type { QueryClient } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
   createRootRouteWithContext,
   Link,
   Outlet
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+
+import { Toaster } from '@/components/ui/sonner'
 
 import '@fontsource/geist-sans'
 import '@/styles/index.css'
@@ -20,7 +23,7 @@ export const Route = createRootRouteWithContext<MyRouteContext>()({
 function RootComponent() {
   return (
     <>
-      <div className={`flex gap-2 p-2 text-lg`}>
+      <div className="flex gap-2 p-2 text-lg">
         <Link
           to="/"
           activeProps={{
@@ -41,7 +44,9 @@ function RootComponent() {
       </div>
       <hr />
       <Outlet />
-      <TanStackRouterDevtools position="bottom-right" />
+      <Toaster richColors />
+      <TanStackRouterDevtools position="bottom-left" />
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   )
 }

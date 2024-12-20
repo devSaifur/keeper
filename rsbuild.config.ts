@@ -5,7 +5,6 @@ import { TanStackRouterRspack } from '@tanstack/router-plugin/rspack'
 
 export default defineConfig({
   plugins: [pluginReact()],
-
   source: {
     entry: { index: './src/main.tsx' }
   },

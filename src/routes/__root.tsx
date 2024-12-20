@@ -1,19 +1,30 @@
-import * as React from 'react'
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
+import type { QueryClient } from '@tanstack/react-query'
+import {
+  createRootRouteWithContext,
+  Link,
+  Outlet
+} from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
-export const Route = createRootRoute({
-  component: RootComponent,
+import '@fontsource/geist-sans'
+import '@/styles/index.css'
+
+interface MyRouteContext {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<MyRouteContext>()({
+  component: RootComponent
 })
 
 function RootComponent() {
   return (
     <>
-      <div className="p-2 flex gap-2 text-lg">
+      <div className={`flex gap-2 p-2 text-lg`}>
         <Link
           to="/"
           activeProps={{
-            className: 'font-bold',
+            className: 'font-bold'
           }}
           activeOptions={{ exact: true }}
         >
@@ -22,7 +33,7 @@ function RootComponent() {
         <Link
           to="/about"
           activeProps={{
-            className: 'font-bold',
+            className: 'font-bold'
           }}
         >
           About

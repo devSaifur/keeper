@@ -1,3 +1,5 @@
-import { Hono } from "hono";
+import { Hono } from 'hono'
 
-export const hello = new Hono().get('/', (c) => c.json('Hello Bun!'))
+export const hello = new Hono().get('/', async (c) => {
+  return c.json('Hello Bun!')
+})

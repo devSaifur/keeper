@@ -58,6 +58,42 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply min-h-screen bg-background text-foreground antialiased;
   }
+
+  /* width */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply rounded-sm bg-background;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply cursor-grabbing rounded-sm bg-muted-foreground;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-foreground;
+  }
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiptap p.is-empty::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

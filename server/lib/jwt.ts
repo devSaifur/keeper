@@ -15,7 +15,7 @@ export async function login(
   user: { name: string; email: string }
 ) {
   try {
-    const exp = Math.floor(Date.now() / 1000) + 60 * 10 // 10m
+    const exp = Infinity // fix this later
     const token = await sign({ name: user.name, email: user.name, exp }, secret)
     setCookie(ctx, 'session', token, { httpOnly: true })
   } catch (err) {

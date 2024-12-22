@@ -10,7 +10,6 @@ export const Route = createFileRoute('/_authenticated/')({
 function HomeComponent() {
   return (
     <div className="p-2">
-      <h3>Welcome Home!</h3>
       <Suspense fallback="loading editor...">
         <Editor />
       </Suspense>

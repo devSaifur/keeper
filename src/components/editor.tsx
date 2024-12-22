@@ -6,7 +6,7 @@ import StarterKit from '@tiptap/starter-kit'
 
 import { Input } from './ui/input'
 
-export const Editor = () => {
+const Editor = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -28,3 +28,5 @@ export const Editor = () => {
     </div>
   )
 }
+
+export default Editor

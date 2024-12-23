@@ -23,3 +23,9 @@ export const signUpSchema = z.object({
 })
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>
+
+export const addNotesSchema = z.array(
+  z.object({ title: z.string(), content: z.string() })
+)
+
+export type AddNoteSchema = z.infer<typeof addNotesSchema>

@@ -40,7 +40,11 @@ export const authRoutes = new Hono()
       return c.json({ error: 'Password do not match!' }, 402)
     }
 
-    await login(c, { name: existingUser.name, email: existingUser.email })
+    await login(c, {
+      id: existingUser.id,
+      name: existingUser.name,
+      email: existingUser.email
+    })
 
     return c.json({ message: 'Success' }, 200)
   })

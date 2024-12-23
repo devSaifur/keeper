@@ -12,11 +12,11 @@ export async function getSession(c: Context) {
 
 export async function login(
   ctx: Context,
-  user: { name: string; email: string }
+  user: { id: string; name: string; email: string }
 ) {
   try {
     const exp = Infinity // fix this later
-    const token = await sign({ name: user.name, email: user.name, exp }, secret)
+    const token = await sign({ ...user, exp }, secret)
     setCookie(ctx, 'session', token, { httpOnly: true })
   } catch (err) {
     console.error(err)

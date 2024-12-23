@@ -3,13 +3,15 @@ import { csrf } from 'hono/csrf'
 import { logger } from 'hono/logger'
 
 import { authMiddleware } from './middleware'
-import { authRoutes } from './routes/authRoutes'
+import { authRoutes } from './routes/auth-routes'
 import { hello } from './routes/hello'
+import { notesRoutes } from './routes/notes-routes'
 
 const api = new Hono()
   .basePath('/api')
   .route('/hello', hello)
   .route('/auth', authRoutes)
+  .route('/notes', notesRoutes)
 
 api.use(logger())
 
@@ -18,7 +20,7 @@ api.use(csrf())
 api.use(authMiddleware)
 
 api.onError((err, c) => {
-  console.log(`Error: ${err.message}`)
+  console.dir(`Error: ${err.message}`, { colors: true })
   return c.json({ error: 'Something went wrong' }, 500)
 })
 

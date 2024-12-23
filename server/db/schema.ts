@@ -1,8 +1,11 @@
+import { randomUUIDv7 } from 'bun'
 import { InferSelectModel, relations, sql } from 'drizzle-orm'
-import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const userTable = sqliteTable('user', {
-  id: int().primaryKey({ autoIncrement: true }),
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => randomUUIDv7()),
   name: text().notNull(),
   email: text().notNull().unique(),
   password: text().notNull()
@@ -13,8 +16,10 @@ export const userRelations = relations(userTable, ({ many }) => ({
 }))
 
 export const noteTable = sqliteTable('note', {
-  id: int().primaryKey({ autoIncrement: true }),
-  userId: int()
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => randomUUIDv7()),
+  userId: text()
     .notNull()
     .references(() => userTable.id),
   title: text().notNull(),

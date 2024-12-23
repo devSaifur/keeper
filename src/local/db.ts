@@ -9,7 +9,7 @@ export interface Note {
   serverId?: string
 }
 
-interface DeletedNote {
+export interface DeletedNote {
   id: string
   deletedAt: number
   syncStatus: 'pending'

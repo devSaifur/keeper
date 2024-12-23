@@ -44,6 +44,7 @@ export const getUser = createMiddleware<ENV>(async (c, next) => {
   }
 
   const user = {
+    id: payload.id as string,
     name: payload.name as string,
     email: payload.email as string
   }

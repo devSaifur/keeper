@@ -61,6 +61,10 @@ body {
     @apply min-h-screen bg-background text-foreground antialiased;
   }
 
+  [data-milkdown-root='true'] {
+    @apply w-full;
+  }
+
   /* width */
   ::-webkit-scrollbar {
     @apply w-2;
@@ -80,12 +84,4 @@ body {
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-foreground;
   }
-}
-
-.tiptap p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
 }

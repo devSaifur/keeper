@@ -6,7 +6,6 @@ export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async ({ context }) => {
     const queryClient = context.queryClient
     const user = await queryClient.fetchQuery(userQueryOption)
-    console.log(user)
     if (!user) {
       throw redirect({
         to: '/login'

@@ -6,9 +6,6 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { Toaster } from '@/components/ui/sonner'
 import { Header } from '@/components/header'
 
-import '@fontsource/geist-sans'
-import '@/styles/index.css'
-
 interface MyRouteContext {
   queryClient: QueryClient
 }

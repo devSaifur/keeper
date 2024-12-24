@@ -2,7 +2,7 @@ import type { Context } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { sign, verify } from 'hono/jwt'
 
-const secret = process.env.JWT_SECRET
+const secret = process.env.JWT_SECRET!
 
 export async function getSession(c: Context) {
   const session = getCookie(c, 'session') ?? null

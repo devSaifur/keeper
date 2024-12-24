@@ -1,7 +1,7 @@
-import { db } from '@server/db'
-import { userTable } from '@server/db/schema'
 import { eq } from 'drizzle-orm'
 
+import { db } from '../db'
+import { userTable } from '../db/schema'
 import { TSignUpSchema } from '../lib/validators'
 
 export async function createUser(user: TSignUpSchema) {

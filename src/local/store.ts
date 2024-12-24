@@ -4,9 +4,12 @@ import type { Database, Note } from './db'
 
 interface StoreState {
   notes: Note[]
+  addNote: (note: Note) => void
+  syncNotes: (db: Database) => Promise<void>
+  deleteNote: (id: string) => void
 }
 
-export const useStore = create<StoreState>((set) => ({
+export const useNoteStore = create<StoreState>((set) => ({
   notes: [] as Note[],
   addNote: (note: Note) => set((state) => ({ notes: [...state.notes, note] })),
 

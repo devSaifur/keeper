@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import db from '@/local/db'
 import { useNoteStore } from '@/local/store'
+import { saveToDB } from '@/local/sync'
 import Placeholder from '@tiptap/extension-placeholder'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -42,7 +42,7 @@ const Editor = () => {
     }
     console.log({ note })
 
-    await db.notes.add({
+    await saveToDB({
       ...note,
       syncStatus: 'pending',
       lastModified: Date.now()

@@ -8,3 +8,10 @@ export async function saveToDB(note: Note) {
 export async function deleteFromDB(id: string) {
   await db.notes.delete(id)
 }
+
+export async function editToDB(id: string, title: string, content: string) {
+  await db.notes.where('id').equals(id).modify({
+    title,
+    content
+  })
+}

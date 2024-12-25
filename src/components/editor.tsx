@@ -19,7 +19,7 @@ const extensions = [
 const Editor = () => {
   const [title, setTitle] = useState('')
   const [isEditorVisible, setIsEditorVisible] = useState(false)
-  const { syncNotes } = useNoteStore()
+  const { addNote } = useNoteStore()
 
   const ref = useRef(null)
 
@@ -37,19 +37,18 @@ const Editor = () => {
 
     const note = {
       title,
-      content: markdown
+      content: markdown,
+      id: crypto.randomUUID()
     }
     console.log({ note })
 
     await db.notes.add({
-      title,
-      content: markdown,
-      id: crypto.randomUUID(),
+      ...note,
       syncStatus: 'pending',
       lastModified: Date.now()
     })
 
-    await syncNotes(db)
+    addNote(note)
 
     setTitle('')
   }

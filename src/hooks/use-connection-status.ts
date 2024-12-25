@@ -12,6 +12,5 @@ const subscribe = (onStoreChange: () => void) => {
   }
 }
 
-export const useConnectionStatus = () => {
-  return useSyncExternalStore(subscribe, getSnapshot)
-}
+export const useConnectionStatus = () =>
+  useSyncExternalStore(subscribe, getSnapshot)

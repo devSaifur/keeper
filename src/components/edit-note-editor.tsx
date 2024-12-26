@@ -20,7 +20,7 @@ interface EditEditorProps {
 
 const extensions = [StarterKit, Markdown]
 
-export const EditEditor = forwardRef<HTMLDivElement, EditEditorProps>(
+export const EditNoteEditor = forwardRef<HTMLDivElement, EditEditorProps>(
   function EditEditor({ note, closeMenu }: EditEditorProps, containerRef) {
     const [title, setTitle] = useState(note.title)
     const { editNote } = useNoteStore()
@@ -33,9 +33,12 @@ export const EditEditor = forwardRef<HTMLDivElement, EditEditorProps>(
     const handleSave = async () => {
       const markdown = editor?.storage.markdown.getMarkdown()
 
-      if (!markdown || !title || note.content === markdown) {
-        closeMenu()
-        return
+      if (
+        !markdown ||
+        !title ||
+        (note.content === markdown && title === note.title)
+      ) {
+        return closeMenu()
       }
 
       await editToDB(note.id, title, markdown)

@@ -1,5 +1,5 @@
 # TODO:
 
-- [ ] Delete Note
-- [ ] Edit Note
+- [x] Delete Note
+- [x] Edit Note
 - [ ] Sync Note

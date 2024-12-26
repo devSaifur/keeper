@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card'
 
 import { ConfirmDelete } from './confirm-delete'
-import { EditEditor } from './edit-editor'
+import { EditNoteEditor } from './edit-note-editor'
 import Markdown from './markdown'
 
 interface NoteProps {
@@ -59,11 +59,9 @@ export const Note = ({ note }: NoteProps) => {
     <MotionConfig transition={TRANSITION}>
       <MotionCard
         onClick={openMenu}
-        style={{
-          borderRadius: 8
-        }}
         layoutId={isOpen ? undefined : `note-${note.id}`}
         className="group bg-card/20 transition-shadow duration-200 hover:shadow-lg"
+        style={{ borderRadius: '8px' }}
       >
         <CardHeader>
           <CardTitle>{note.title}</CardTitle>
@@ -71,12 +69,12 @@ export const Note = ({ note }: NoteProps) => {
         <CardContent>
           <Markdown>{note.content}</Markdown>
         </CardContent>
-        <CardFooter className="invisible justify-end group-hover:visible">
+        <CardFooter className="justify-end group-hover:visible">
           <ConfirmDelete noteId={note.id} />
         </CardFooter>
       </MotionCard>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isOpen && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"
@@ -86,13 +84,11 @@ export const Note = ({ note }: NoteProps) => {
           >
             <motion.div
               ref={editorContainerRef}
-              style={{
-                borderRadius: 12
-              }}
               layoutId={`note-${note.id}`}
+              style={{ borderRadius: '8px' }}
               className="relative flex h-[26rem] w-[42rem] flex-col overflow-hidden bg-white px-2 py-4 outline-none dark:bg-zinc-700"
             >
-              <EditEditor
+              <EditNoteEditor
                 note={note}
                 closeMenu={closeMenu}
                 ref={editorContainerRef}

@@ -16,7 +16,7 @@ const extensions = [
   Placeholder.configure({ placeholder: 'Type something...' })
 ]
 
-const Editor = () => {
+export default function AddNoteEditor() {
   const [title, setTitle] = useState('')
   const [isEditorVisible, setIsEditorVisible] = useState(false)
   const { addNote } = useNoteStore()
@@ -40,7 +40,6 @@ const Editor = () => {
       content: markdown,
       id: crypto.randomUUID()
     }
-    console.log({ note })
 
     await saveToDB({
       ...note,
@@ -83,5 +82,3 @@ const Editor = () => {
     </div>
   )
 }
-
-export default Editor

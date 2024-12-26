@@ -15,7 +15,11 @@ import {
 } from './ui/alert-dialog'
 import { Button } from './ui/button'
 
-export const ConfirmDelete = ({ noteId }: { noteId: string }) => {
+interface ConfirmDeleteProps {
+  noteId: string
+}
+
+export const ConfirmDelete = ({ noteId }: ConfirmDeleteProps) => {
   const { deleteNote } = useNoteStore()
 
   async function handleDelete(id: string) {
@@ -23,9 +27,13 @@ export const ConfirmDelete = ({ noteId }: { noteId: string }) => {
     await deleteFromDB(id)
   }
 
+  const handleOpen = (e: React.MouseEvent) => {
+    e.stopPropagation()
+  }
+
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger onClick={handleOpen}>
         <Button size="icon" variant="ghost">
           <TrashIcon className="text-red-700" strokeWidth={3} />
         </Button>
@@ -41,7 +49,7 @@ export const ConfirmDelete = ({ noteId }: { noteId: string }) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={handleDelete.bind(null, noteId)}
+            onClick={async () => await handleDelete(noteId)}
             className="bg-red-700 text-white hover:bg-red-800"
           >
             Continue

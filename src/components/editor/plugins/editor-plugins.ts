@@ -14,26 +14,39 @@ import { JuicePlugin } from '@udecode/plate-juice'
 import { KbdPlugin } from '@udecode/plate-kbd/react'
 import { ColumnPlugin } from '@udecode/plate-layout/react'
 import { MarkdownPlugin } from '@udecode/plate-markdown'
+import { SlashPlugin } from '@udecode/plate-slash-command/react'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
 import { TrailingBlockPlugin } from '@udecode/plate-trailing-block'
 
+import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin'
+
+import { alignPlugin } from './align-plugin'
+import { autoformatPlugin } from './auto-format-plugin'
 import { basicNodesPlugins } from './basic-nodes-plugins'
+import { blockMenuPlugins } from './block-menu-plugins'
+import { cursorOverlayPlugin } from './cursor-overlay-plugin'
+import { deletePlugins } from './delete-plugins'
+import { dndPlugins } from './dnd-plugins'
 import { equationPlugins } from './equation-plugins'
 import { exitBreakPlugin } from './exit-break-plugin'
 import { indentListPlugins } from './indent-list-plugins'
 import { lineHeightPlugin } from './line-height-plugin'
 import { linkPlugin } from './link-plugin'
+import { mediaPlugins } from './media-plugins'
+import { resetBlockTypePlugin } from './reset-block-type-plugin'
 import { softBreakPlugin } from './soft-break-plugin'
 import { tablePlugin } from './table-plugin'
+import { tocPlugin } from './toc-plugin'
 
 export const viewPlugins = [
   ...basicNodesPlugins,
   HorizontalRulePlugin,
   linkPlugin,
   DatePlugin,
-
   tablePlugin,
   TogglePlugin,
+  tocPlugin,
+  ...mediaPlugins,
   ...equationPlugins,
   CalloutPlugin,
   ColumnPlugin,
@@ -46,17 +59,24 @@ export const viewPlugins = [
   KbdPlugin,
 
   // Block Style
+  alignPlugin,
   ...indentListPlugins,
   lineHeightPlugin
 ] as const
 
 export const editorPlugins = [
+  // // AI
+  // ...aiPlugins,
+
   // Nodes
   ...viewPlugins,
 
   // Functionality
+  SlashPlugin,
+  autoformatPlugin,
   cursorOverlayPlugin,
   ...blockMenuPlugins,
+  ...dndPlugins,
   EmojiPlugin,
   exitBreakPlugin,
   resetBlockTypePlugin,
@@ -67,5 +87,8 @@ export const editorPlugins = [
   // Deserialization
   DocxPlugin,
   MarkdownPlugin.configure({ options: { indentList: true } }),
-  JuicePlugin
+  JuicePlugin,
+
+  // UI
+  FloatingToolbarPlugin
 ]

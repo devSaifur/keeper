@@ -1,17 +1,14 @@
-import React from 'react';
-
-import type { TEquationElement } from '@udecode/plate-math';
-
-import { cn } from '@udecode/cn';
-import { type SlateElementProps, SlateElement } from '@udecode/plate-common';
-import { getEquationHtml } from '@udecode/plate-math';
+import { cn } from '@udecode/cn'
+import { SlateElement, type SlateElementProps } from '@udecode/plate-common'
+import type { TEquationElement } from '@udecode/plate-math'
+import { getEquationHtml } from '@udecode/plate-math'
 
 export function InlineEquationElementStatic({
   children,
   className,
   ...props
 }: SlateElementProps) {
-  const element = props.element as TEquationElement;
+  const element = props.element as TEquationElement
 
   const html = getEquationHtml({
     element,
@@ -24,9 +21,9 @@ export function InlineEquationElementStatic({
       output: 'htmlAndMathml',
       strict: 'warn',
       throwOnError: false,
-      trust: false,
-    },
-  });
+      trust: false
+    }
+  })
 
   return (
     <SlateElement
@@ -51,11 +48,11 @@ export function InlineEquationElementStatic({
             'font-mono leading-none'
           )}
           dangerouslySetInnerHTML={{
-            __html: html,
+            __html: html
           }}
         />
       </div>
       {children}
     </SlateElement>
-  );
+  )
 }

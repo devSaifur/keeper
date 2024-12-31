@@ -1,30 +1,26 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import TextareaAutosize, {
-  type TextareaAutosizeProps,
-} from 'react-textarea-autosize';
-
-import type { TEquationElement } from '@udecode/plate-math';
-
-import { cn } from '@udecode/cn';
+import { useEffect } from 'react'
+import { cn } from '@udecode/cn'
 import {
   createPrimitiveComponent,
   selectSiblingNodePoint,
   useEditorRef,
-  useElement,
-} from '@udecode/plate-common/react';
-import { useEquationInput } from '@udecode/plate-math/react';
-import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
-import { CornerDownLeftIcon } from 'lucide-react';
-import { useReadOnly, useSelected } from 'slate-react';
+  useElement
+} from '@udecode/plate-common/react'
+import type { TEquationElement } from '@udecode/plate-math'
+import { useEquationInput } from '@udecode/plate-math/react'
+import { BlockSelectionPlugin } from '@udecode/plate-selection/react'
+import { CornerDownLeftIcon } from 'lucide-react'
+import TextareaAutosize, {
+  type TextareaAutosizeProps
+} from 'react-textarea-autosize'
+import { useReadOnly, useSelected } from 'slate-react'
 
-import { Button } from './button';
-import { PopoverContent } from './popover';
+import { Button } from './button'
+import { PopoverContent } from './popover'
 
 const EquationInput = createPrimitiveComponent(TextareaAutosize)({
-  propsHook: useEquationInput,
-});
+  propsHook: useEquationInput
+})
 
 const EquationPopoverContent = ({
   className,
@@ -33,40 +29,40 @@ const EquationPopoverContent = ({
   setOpen,
   ...props
 }: {
-  isInline: boolean;
-  open: boolean;
-  setOpen: (open: boolean) => void;
+  isInline: boolean
+  open: boolean
+  setOpen: (open: boolean) => void
 } & TextareaAutosizeProps) => {
-  const editor = useEditorRef();
-  const readOnly = useReadOnly();
-  const element = useElement<TEquationElement>();
-  const selected = useSelected();
+  const editor = useEditorRef()
+  const readOnly = useReadOnly()
+  const element = useElement<TEquationElement>()
+  const selected = useSelected()
 
   useEffect(() => {
     if (isInline && selected) {
-      setOpen(true);
+      setOpen(true)
     }
-  }, [selected, isInline, setOpen]);
+  }, [selected, isInline, setOpen])
 
-  if (readOnly) return null;
+  if (readOnly) return null
 
   const onClose = () => {
-    setOpen(false);
+    setOpen(false)
 
     if (isInline) {
-      selectSiblingNodePoint(editor, { node: element });
+      selectSiblingNodePoint(editor, { node: element })
     } else {
       editor
         .getApi(BlockSelectionPlugin)
-        .blockSelection.addSelectedRow(element.id as string);
+        .blockSelection.addSelectedRow(element.id as string)
     }
-  };
+  }
 
   return (
     <PopoverContent
       className="flex gap-2"
       onEscapeKeyDown={(e) => {
-        e.preventDefault();
+        e.preventDefault()
       }}
       contentEditable={false}
     >
@@ -81,7 +77,7 @@ const EquationPopoverContent = ({
         Done <CornerDownLeftIcon className="size-3.5" />
       </Button>
     </PopoverContent>
-  );
-};
+  )
+}
 
-export { EquationPopoverContent };
+export { EquationPopoverContent }

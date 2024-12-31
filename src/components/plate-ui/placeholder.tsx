@@ -33,7 +33,7 @@ export const withPlaceholder = createNodeHOC(Placeholder)
 
 export const withPlaceholdersPrimitive = createNodesHOC(Placeholder)
 
-export const withPlaceholders = (components: any) =>
+export const withPlaceholders = (components: unknown) =>
   withPlaceholdersPrimitive(components, [
     {
       key: ParagraphPlugin.key,

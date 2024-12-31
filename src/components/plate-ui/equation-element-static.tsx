@@ -1,18 +1,15 @@
-import React from 'react';
-
-import type { TEquationElement } from '@udecode/plate-math';
-
-import { cn } from '@udecode/cn';
-import { type SlateElementProps, SlateElement } from '@udecode/plate-common';
-import { getEquationHtml } from '@udecode/plate-math';
-import { RadicalIcon } from 'lucide-react';
+import { cn } from '@udecode/cn'
+import { SlateElement, type SlateElementProps } from '@udecode/plate-common'
+import type { TEquationElement } from '@udecode/plate-math'
+import { getEquationHtml } from '@udecode/plate-math'
+import { RadicalIcon } from 'lucide-react'
 
 export function EquationElementStatic({
   children,
   className,
   ...props
 }: SlateElementProps) {
-  const element = props.element as TEquationElement;
+  const element = props.element as TEquationElement
 
   const html = getEquationHtml({
     element,
@@ -25,9 +22,9 @@ export function EquationElementStatic({
       output: 'htmlAndMathml',
       strict: 'warn',
       throwOnError: false,
-      trust: false,
-    },
-  });
+      trust: false
+    }
+  })
 
   return (
     <SlateElement className={cn('my-1', className)} {...props}>
@@ -40,7 +37,7 @@ export function EquationElementStatic({
         {element.texExpression.length > 0 ? (
           <span
             dangerouslySetInnerHTML={{
-              __html: html,
+              __html: html
             }}
           />
         ) : (
@@ -52,5 +49,5 @@ export function EquationElementStatic({
       </div>
       {children}
     </SlateElement>
-  );
+  )
 }

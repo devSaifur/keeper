@@ -1,26 +1,22 @@
-'use client';
+import { useRef, useState } from 'react'
+import { cn, withRef } from '@udecode/cn'
+import { useElement } from '@udecode/plate-common/react'
+import type { TEquationElement } from '@udecode/plate-math'
+import { useEquationElement } from '@udecode/plate-math/react'
+import { RadicalIcon } from 'lucide-react'
+import { useSelected } from 'slate-react'
 
-import React, { useRef, useState } from 'react';
-
-import type { TEquationElement } from '@udecode/plate-math';
-
-import { cn, withRef } from '@udecode/cn';
-import { useElement } from '@udecode/plate-common/react';
-import { useEquationElement } from '@udecode/plate-math/react';
-import { RadicalIcon } from 'lucide-react';
-import { useSelected } from 'slate-react';
-
-import { EquationPopoverContent } from './equation-popover';
-import { PlateElement } from './plate-element';
-import { Popover, PopoverTrigger } from './popover';
+import { EquationPopoverContent } from './equation-popover'
+import { PlateElement } from './plate-element'
+import { Popover, PopoverTrigger } from './popover'
 
 export const EquationElement = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {
-    const element = useElement<TEquationElement>();
+    const element = useElement<TEquationElement>()
 
-    const selected = useSelected();
-    const [open, setOpen] = useState(selected);
-    const katexRef = useRef<HTMLDivElement | null>(null);
+    const selected = useSelected()
+    const [open, setOpen] = useState(selected)
+    const katexRef = useRef<HTMLDivElement | null>(null)
 
     useEquationElement({
       element,
@@ -34,9 +30,9 @@ export const EquationElement = withRef<typeof PlateElement>(
         output: 'htmlAndMathml',
         strict: 'warn',
         throwOnError: false,
-        trust: false,
-      },
-    });
+        trust: false
+      }
+    })
 
     return (
       <PlateElement ref={ref} className={cn('my-1', className)} {...props}>
@@ -74,6 +70,6 @@ export const EquationElement = withRef<typeof PlateElement>(
 
         {children}
       </PlateElement>
-    );
+    )
   }
-);
+)

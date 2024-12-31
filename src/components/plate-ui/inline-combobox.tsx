@@ -62,7 +62,7 @@ interface InlineComboboxContextValue {
 }
 
 const InlineComboboxContext = createContext<InlineComboboxContextValue>(
-  null as any
+  null as unknown as InlineComboboxContextValue
 )
 
 export const defaultFilter: FilterFn = (

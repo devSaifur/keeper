@@ -18,7 +18,7 @@ export const LinkElement = withRef<typeof PlateElement>(
           className,
           'font-medium text-primary underline decoration-primary underline-offset-4'
         )}
-        {...(linkProps as any)}
+        {...(linkProps as unknown as Record<string, unknown>)}
         {...props}
       >
         {children}

@@ -1,7 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
 import { cn } from '@udecode/cn'
-import { CopilotPlugin } from '@udecode/plate-ai/react'
-import { useEditorPlugin } from '@udecode/plate-common/react'
 import {
   Check,
   ChevronsUpDown,
@@ -102,25 +100,12 @@ export function SettingsDialog() {
   const [open, setOpen] = useState(false)
   const [openModel, setOpenModel] = useState(false)
 
-  const { getOptions, setOption } = useEditorPlugin(CopilotPlugin)
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     Object.entries(tempKeys).forEach(([service, key]) => {
       setKey(service, key)
     })
     setOpen(false)
-
-    // Update AI options if needed
-    const completeOptions = getOptions().completeOptions ?? {}
-    setOption('completeOptions', {
-      ...completeOptions,
-      body: {
-        ...completeOptions.body,
-        apiKey: tempKeys.openai,
-        model: model.value
-      }
-    })
   }
 
   const toggleKeyVisibility = (key: string) => {

@@ -38,7 +38,7 @@ export const withPlaceholders = (components: unknown) =>
     {
       key: ParagraphPlugin.key,
       hideOnBlur: true,
-      placeholder: 'Type a paragraph',
+      placeholder: 'Take a note...',
       query: {
         maxLevel: 1
       }

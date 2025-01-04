@@ -1,38 +1,33 @@
 import { create } from 'zustand'
 
-import type { Database, Note } from './db'
-
-type TNote = Pick<Note, 'id' | 'title' | 'content'>
+import type { Note } from './db'
+import db from './db'
 
 interface StoreState {
-  notes: TNote[]
-  addNote: (note: TNote) => void
-  editNote: (note: TNote) => void
-  syncNotes: (db: Database) => Promise<void>
+  notes: Note[]
+  addNote: (note: Note) => void
+  editNote: (note: Note) => void
+  syncNotes: () => Promise<void>
   deleteNote: (id: string) => void
 }
 
 export const useNoteStore = create<StoreState>((set) => ({
-  notes: [] as TNote[],
+  notes: [] as Note[],
 
-  addNote: (note: TNote) => set((state) => ({ notes: [...state.notes, note] })),
+  addNote: (note: Note) => set((state) => ({ notes: [...state.notes, note] })),
 
-  editNote: (note: TNote) =>
+  editNote: (note: Note) =>
     set((state) => ({
       notes: state.notes.map((n) => (n.id === note.id ? note : n))
     })),
 
-  syncNotes: async (db: Database) => {
-    const notes = (await db.notes.toArray()).map((note) => ({
-      id: note.id,
-      title: note.title,
-      content: note.content
-    }))
+  syncNotes: async () => {
+    const notes = await db.notes.toArray()
     set({ notes })
   },
 
   deleteNote: (id: string) =>
     set((state) => ({
-      notes: state.notes.filter((note: TNote) => note.id !== id)
+      notes: state.notes.filter((note: Note) => note.id !== id)
     }))
 }))

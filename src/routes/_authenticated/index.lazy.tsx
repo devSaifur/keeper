@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 
-import AddNoteEditor from '@/components/add-note-editor'
+import PlateEditor from '@/components/editor/plate-editor'
 import Notes from '@/components/notes'
 
 export const Route = createLazyFileRoute('/_authenticated/')({
@@ -10,7 +10,7 @@ export const Route = createLazyFileRoute('/_authenticated/')({
 function HomeComponent() {
   return (
     <div className="p-2">
-      <AddNoteEditor />
+      <PlateEditor />
       <Notes />
     </div>
   )

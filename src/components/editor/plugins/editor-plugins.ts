@@ -26,7 +26,6 @@ import { basicNodesPlugins } from './basic-nodes-plugins'
 import { blockMenuPlugins } from './block-menu-plugins'
 import { cursorOverlayPlugin } from './cursor-overlay-plugin'
 import { deletePlugins } from './delete-plugins'
-import { dndPlugins } from './dnd-plugins'
 import { equationPlugins } from './equation-plugins'
 import { exitBreakPlugin } from './exit-break-plugin'
 import { indentListPlugins } from './indent-list-plugins'
@@ -76,7 +75,6 @@ export const editorPlugins = [
   autoformatPlugin,
   cursorOverlayPlugin,
   ...blockMenuPlugins,
-  ...dndPlugins,
   EmojiPlugin,
   exitBreakPlugin,
   resetBlockTypePlugin,

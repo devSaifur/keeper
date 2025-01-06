@@ -1,7 +1,6 @@
 import type { Note } from '@/local/db'
 import { saveToDB } from '@/local/sync'
 import { Plate } from '@udecode/plate-common/react'
-import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { SettingsDialog } from '@/components/editor/settings'
@@ -23,7 +22,6 @@ export function PlateEditor() {
       serverId: ''
     } as Note
     await saveToDB(note)
-    toast.success('Note saved!')
   }
 
   return (

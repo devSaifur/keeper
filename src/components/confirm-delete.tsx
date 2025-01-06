@@ -1,4 +1,3 @@
-import { useNoteStore } from '@/local/store'
 import { deleteFromDB } from '@/local/sync'
 import { TrashIcon } from 'lucide-react'
 
@@ -20,10 +19,7 @@ interface ConfirmDeleteProps {
 }
 
 export const ConfirmDelete = ({ noteId }: ConfirmDeleteProps) => {
-  const { deleteNote } = useNoteStore()
-
   async function handleDelete(id: string) {
-    deleteNote(id)
     await deleteFromDB(id)
   }
 

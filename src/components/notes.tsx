@@ -1,34 +1,16 @@
-import { useEffect } from 'react'
-import { useNoteStore } from '@/local/store'
+import db from '@/local/db'
+import { useLiveQuery } from 'dexie-react-hooks'
 
-import { useSyncNotes } from '@/hooks/use-sync-notes'
 import { Note } from '@/components/note'
 
 export default function Notes() {
-  const { notes, syncNotes } = useNoteStore()
-  const { mutate, isPending } = useSyncNotes()
+  const notes = useLiveQuery(() => db.notes.toArray())
 
-  useEffect(() => {
-    console.log('First render...')
-    syncNotes()
-  }, [syncNotes])
+  if (!notes) {
+    return null
+  }
 
-  useEffect(() => {
-    const syncInterval = setInterval(() => {
-      mutate(notes)
-    }, 10000)
-
-    return () => clearInterval(syncInterval)
-  }, [mutate, notes])
-
-  console.log(isPending ? 'Syncing notes...' : 'Notes synced!')
-
-  const sortedNotes = notes.sort(
-    (a, b) =>
-      new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
-  )
-
-  console.log(sortedNotes)
+  const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
 
   return (
     <div className="grid auto-rows-max grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

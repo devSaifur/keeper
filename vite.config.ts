@@ -18,5 +18,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@server': path.resolve(__dirname, './server')
     }
+  },
+  worker: {
+    format: 'es'
   }
 })

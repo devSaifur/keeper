@@ -1,5 +1,6 @@
-import { deleteFromDB } from '@/local/sync'
+import { addToDeletedNotes, deleteFromDB, getNoteById } from '@/local/sync'
 import { TrashIcon } from 'lucide-react'
+import { toast } from 'sonner'
 
 import {
   AlertDialog,
@@ -20,7 +21,11 @@ interface ConfirmDeleteProps {
 
 export const ConfirmDelete = ({ noteId }: ConfirmDeleteProps) => {
   async function handleDelete(id: string) {
+    const noteToDelete = await getNoteById(id)
+    if (!noteToDelete) return
     await deleteFromDB(id)
+    await addToDeletedNotes(noteToDelete)
+    toast.success('Note deleted successfully')
   }
 
   const handleOpen = (e: React.MouseEvent) => {

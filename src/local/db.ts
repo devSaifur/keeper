@@ -24,7 +24,7 @@ const db = new Dexie('Database') as Database
 
 db.version(3).stores({
   notes: 'id, title, content, lastModified, serverId',
-  deletions: 'id, deletedAt, syncStatus'
+  deletedNotes: 'id, deletedAt, syncStatus'
 })
 
 export default db

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 
 import { db } from '../db'
 import { noteTable } from '../db/schema'
@@ -14,17 +14,22 @@ export async function getNotesByUserId(userId: string) {
     .where(eq(noteTable.userId, userId))
 }
 
-export async function deleteNoteById(noteId: string) {
-  await db.delete(noteTable).where(eq(noteTable.id, noteId))
+export async function deleteNotesById(noteId: string[]) {
+  await db.delete(noteTable).where(inArray(noteTable.id, noteId))
 }
 
 export async function addNote(
   userId: string,
   note: { title: string; content: string }
 ) {
-  await db.insert(noteTable).values({
-    title: note.title,
-    content: note.content,
-    userId
-  })
+  const [newNote] = await db
+    .insert(noteTable)
+    .values({
+      title: note.title,
+      content: note.content,
+      userId
+    })
+    .returning()
+
+  return newNote
 }

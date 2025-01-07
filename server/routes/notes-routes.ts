@@ -2,7 +2,7 @@ import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
 import z from 'zod'
 
-import { addNote, deleteNoteById, getNotesByUserId } from '../data/notes'
+import { addNote, deleteNotesById, getNotesByUserId } from '../data/notes'
 import { getUser } from '../middleware'
 
 export const notesRoutes = new Hono()
@@ -33,25 +33,26 @@ export const notesRoutes = new Hono()
       const results = await Promise.all(
         notesToSync.map(async (note) => {
           try {
-            await addNote(userId, note)
-            return { noteId: note.id, success: true }
+            const addedNote = await addNote(userId, note)
+            return { noteId: note.id, success: true, serverId: addedNote.id }
           } catch (err) {
             console.error(`Error adding note: ${err}`)
-            return { noteId: note.id, success: false }
+            return { noteId: note.id, success: false, serverId: null }
           }
         })
       )
+
       return c.json({ message: 'Success', results }, 201)
     }
   )
   .delete(
-    '/:id',
-    zValidator('param', z.string().uuid()),
+    '/',
+    zValidator('json', z.array(z.string().uuid())),
     getUser,
     async (c) => {
-      const noteId = c.req.valid('param')
+      const noteIds = c.req.valid('json')
 
-      await deleteNoteById(noteId)
+      await deleteNotesById(noteIds)
 
       return c.json({ message: 'Success' }, 200)
     }

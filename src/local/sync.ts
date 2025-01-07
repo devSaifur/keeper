@@ -15,3 +15,17 @@ export async function editToDB(id: string, title: string, content: string) {
     content
   })
 }
+
+export async function addToDeletedNotes(note: Note) {
+  if (!note.serverId) return
+
+  await db.deletedNotes.add({
+    id: note.serverId,
+    deletedAt: Date.now(),
+    syncStatus: 'pending'
+  })
+}
+
+export async function getNoteById(id: string) {
+  return db.notes.get(id)
+}

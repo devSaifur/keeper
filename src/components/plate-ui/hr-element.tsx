@@ -1,5 +1,5 @@
 import { cn, withRef } from '@udecode/cn'
-import { useFocused, useReadOnly, useSelected } from 'slate-react'
+import { useFocused, useReadOnly, useSelected } from '@udecode/plate/react'
 
 import { PlateElement } from './plate-element'
 

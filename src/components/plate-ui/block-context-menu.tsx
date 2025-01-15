@@ -1,11 +1,5 @@
 import { useCallback } from 'react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
-import { unsetNodes } from '@udecode/plate-common'
-import {
-  focusEditor,
-  ParagraphPlugin,
-  useEditorPlugin
-} from '@udecode/plate-common/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { IndentListPlugin } from '@udecode/plate-indent-list/react'
 import {
@@ -13,6 +7,7 @@ import {
   BlockMenuPlugin,
   BlockSelectionPlugin
 } from '@udecode/plate-selection/react'
+import { ParagraphPlugin, useEditorPlugin } from '@udecode/plate/react'
 
 import { useIsTouchDevice } from '@/hooks/use-is-touch-device'
 
@@ -39,10 +34,12 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
         .blockSelection.getNodes()
         .forEach(([node, path]) => {
           if (node[IndentListPlugin.key]) {
-            unsetNodes(editor, [IndentListPlugin.key, 'indent'], { at: path })
+            editor.tf.unsetNodes([IndentListPlugin.key, 'indent'], {
+              at: path
+            })
           }
 
-          editor.tf.toggle.block({ type }, { at: path })
+          editor.tf.toggleBlock(type, { at: path })
         })
     },
     [editor]
@@ -103,7 +100,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
               editor
                 .getTransforms(BlockSelectionPlugin)
                 .blockSelection.removeNodes()
-              focusEditor(editor)
+              editor.tf.focus()
             }}
           >
             Delete
@@ -112,9 +109,7 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
             onClick={() => {
               editor
                 .getTransforms(BlockSelectionPlugin)
-                .blockSelection.duplicate(
-                  editor.getApi(BlockSelectionPlugin).blockSelection.getNodes()
-                )
+                .blockSelection.duplicate()
             }}
           >
             Duplicate

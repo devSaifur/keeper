@@ -1,10 +1,10 @@
 import { cn } from '@udecode/cn'
-import type { SlateRenderElementProps } from '@udecode/plate-common'
+import type { SlateRenderElementProps } from '@udecode/plate'
 import {
   useIndentTodoListElement,
   useIndentTodoListElementState
 } from '@udecode/plate-indent-list/react'
-import { useReadOnly } from 'slate-react'
+import { useReadOnly } from '@udecode/plate/react'
 
 import { Checkbox } from './checkbox'
 

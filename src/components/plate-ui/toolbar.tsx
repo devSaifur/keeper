@@ -1,34 +1,31 @@
-'use client';
+import * as React from 'react'
+import * as ToolbarPrimitive from '@radix-ui/react-toolbar'
+import { cn, withCn, withRef, withVariants } from '@udecode/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { ChevronDown } from 'lucide-react'
 
-import * as React from 'react';
-
-import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
-import { cn, withCn, withRef, withVariants } from '@udecode/cn';
-import { type VariantProps, cva } from 'class-variance-authority';
-import { ChevronDown } from 'lucide-react';
-
-import { Separator } from './separator';
-import { withTooltip } from './tooltip';
+import { Separator } from './separator'
+import { withTooltip } from './tooltip'
 
 export const Toolbar = withCn(
   ToolbarPrimitive.Root,
   'relative flex select-none items-center'
-);
+)
 
 export const ToolbarToggleGroup = withCn(
   ToolbarPrimitive.ToolbarToggleGroup,
   'flex items-center'
-);
+)
 
 export const ToolbarLink = withCn(
   ToolbarPrimitive.Link,
   'font-medium underline underline-offset-4'
-);
+)
 
 export const ToolbarSeparator = withCn(
   ToolbarPrimitive.Separator,
   'mx-2 my-1 w-px shrink-0 bg-border'
-);
+)
 
 const toolbarButtonVariants = cva(
   cn(
@@ -37,23 +34,23 @@ const toolbarButtonVariants = cva(
   {
     defaultVariants: {
       size: 'sm',
-      variant: 'default',
+      variant: 'default'
     },
     variants: {
       size: {
         default: 'h-10 px-3',
         lg: 'h-11 px-5',
-        sm: 'h-7 px-2',
+        sm: 'h-7 px-2'
       },
       variant: {
         default:
           'bg-transparent hover:bg-muted hover:text-muted-foreground aria-checked:bg-accent aria-checked:text-accent-foreground',
         outline:
-          'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
-      },
-    },
+          'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground'
+      }
+    }
   }
-);
+)
 
 const dropdownArrowVariants = cva(
   cn(
@@ -62,30 +59,30 @@ const dropdownArrowVariants = cva(
   {
     defaultVariants: {
       size: 'sm',
-      variant: 'default',
+      variant: 'default'
     },
     variants: {
       size: {
         default: 'h-10 w-6',
         lg: 'h-11 w-8',
-        sm: 'h-7 w-4',
+        sm: 'h-7 w-4'
       },
       variant: {
         default:
           'bg-transparent hover:bg-muted hover:text-muted-foreground aria-checked:bg-accent aria-checked:text-accent-foreground',
         outline:
-          'border border-l-0 border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
-      },
-    },
+          'border border-l-0 border-input bg-transparent hover:bg-accent hover:text-accent-foreground'
+      }
+    }
   }
-);
+)
 
 const ToolbarButton = withTooltip(
   React.forwardRef<
     React.ElementRef<typeof ToolbarToggleItem>,
     {
-      isDropdown?: boolean;
-      pressed?: boolean;
+      isDropdown?: boolean
+      pressed?: boolean
     } & Omit<
       React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
       'asChild' | 'value'
@@ -107,7 +104,7 @@ const ToolbarButton = withTooltip(
             className={cn(
               toolbarButtonVariants({
                 size,
-                variant,
+                variant
               }),
               isDropdown && 'justify-between gap-1 pr-1',
               className
@@ -138,7 +135,7 @@ const ToolbarButton = withTooltip(
           className={cn(
             toolbarButtonVariants({
               size,
-              variant,
+              variant
             }),
             isDropdown && 'pr-1',
             className
@@ -147,13 +144,13 @@ const ToolbarButton = withTooltip(
         >
           {children}
         </ToolbarPrimitive.Button>
-      );
+      )
     }
   )
-);
-ToolbarButton.displayName = 'ToolbarButton';
+)
+ToolbarButton.displayName = 'ToolbarButton'
 
-export { ToolbarButton };
+export { ToolbarButton }
 
 export const ToolbarSplitButton = React.forwardRef<
   React.ElementRef<typeof ToolbarButton>,
@@ -167,8 +164,8 @@ export const ToolbarSplitButton = React.forwardRef<
     >
       {children}
     </ToolbarButton>
-  );
-});
+  )
+})
 
 export const ToolbarSplitButtonPrimary = withTooltip(
   React.forwardRef<
@@ -181,7 +178,7 @@ export const ToolbarSplitButtonPrimary = withTooltip(
         className={cn(
           toolbarButtonVariants({
             size,
-            variant,
+            variant
           }),
           'rounded-r-none',
           'group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground',
@@ -191,9 +188,9 @@ export const ToolbarSplitButtonPrimary = withTooltip(
       >
         {children}
       </span>
-    );
+    )
   })
-);
+)
 
 export const ToolbarSplitButtonSecondary = React.forwardRef<
   HTMLButtonElement,
@@ -206,7 +203,7 @@ export const ToolbarSplitButtonSecondary = React.forwardRef<
       className={cn(
         dropdownArrowVariants({
           size,
-          variant,
+          variant
         }),
         'group-data-[pressed=true]:bg-accent group-data-[pressed=true]:text-accent-foreground',
         className
@@ -217,16 +214,16 @@ export const ToolbarSplitButtonSecondary = React.forwardRef<
     >
       <ChevronDown className="size-3.5 text-muted-foreground" data-icon />
     </span>
-  );
-});
+  )
+})
 
-ToolbarSplitButton.displayName = 'ToolbarButton';
+ToolbarSplitButton.displayName = 'ToolbarButton'
 
 export const ToolbarToggleItem = withVariants(
   ToolbarPrimitive.ToggleItem,
   toolbarButtonVariants,
   ['variant', 'size']
-);
+)
 
 export const ToolbarGroup = withRef<'div'>(({ children, className }, ref) => {
   return (
@@ -244,5 +241,5 @@ export const ToolbarGroup = withRef<'div'>(({ children, className }, ref) => {
         <Separator orientation="vertical" />
       </div>
     </div>
-  );
-});
+  )
+})

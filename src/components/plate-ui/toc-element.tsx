@@ -1,5 +1,3 @@
-'use client'
-
 import { cn, withRef } from '@udecode/cn'
 import { useTocElement, useTocElementState } from '@udecode/plate-heading/react'
 import { cva } from 'class-variance-authority'
@@ -37,9 +35,7 @@ export const TocElement = withRef<typeof PlateElement>(
                 key={item.id}
                 variant="ghost"
                 className={cn(
-                  headingItemVariants({
-                    depth: item.depth as 1 | 2 | 3 | null | undefined
-                  })
+                  headingItemVariants({ depth: item.depth as any })
                 )}
                 onClick={(e) => btnProps.onClick(e, item, 'smooth')}
                 aria-current

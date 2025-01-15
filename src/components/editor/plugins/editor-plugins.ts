@@ -1,5 +1,4 @@
 import { CalloutPlugin } from '@udecode/plate-callout/react'
-import { ParagraphPlugin } from '@udecode/plate-common/react'
 import { DatePlugin } from '@udecode/plate-date/react'
 import { DocxPlugin } from '@udecode/plate-docx'
 import { EmojiPlugin } from '@udecode/plate-emoji/react'
@@ -17,15 +16,19 @@ import { MarkdownPlugin } from '@udecode/plate-markdown'
 import { SlashPlugin } from '@udecode/plate-slash-command/react'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
 import { TrailingBlockPlugin } from '@udecode/plate-trailing-block'
+import { ParagraphPlugin } from '@udecode/plate/react'
 
+import { FixedToolbarPlugin } from '@/components/editor/plugins/fixed-toolbar-plugin'
 import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin'
 
 import { alignPlugin } from './align-plugin'
-import { autoformatPlugin } from './auto-format-plugin'
+import { autoformatPlugin } from './autoformat-plugin'
 import { basicNodesPlugins } from './basic-nodes-plugins'
 import { blockMenuPlugins } from './block-menu-plugins'
+import { commentsPlugin } from './comments-plugin'
 import { cursorOverlayPlugin } from './cursor-overlay-plugin'
 import { deletePlugins } from './delete-plugins'
+import { dndPlugins } from './dnd-plugins'
 import { equationPlugins } from './equation-plugins'
 import { exitBreakPlugin } from './exit-break-plugin'
 import { indentListPlugins } from './indent-list-plugins'
@@ -60,13 +63,13 @@ export const viewPlugins = [
   // Block Style
   alignPlugin,
   ...indentListPlugins,
-  lineHeightPlugin
+  lineHeightPlugin,
+
+  // Collaboration
+  commentsPlugin
 ] as const
 
 export const editorPlugins = [
-  // // AI
-  // ...aiPlugins,
-
   // Nodes
   ...viewPlugins,
 
@@ -75,6 +78,7 @@ export const editorPlugins = [
   autoformatPlugin,
   cursorOverlayPlugin,
   ...blockMenuPlugins,
+  ...dndPlugins,
   EmojiPlugin,
   exitBreakPlugin,
   resetBlockTypePlugin,
@@ -88,5 +92,6 @@ export const editorPlugins = [
   JuicePlugin,
 
   // UI
+  FixedToolbarPlugin,
   FloatingToolbarPlugin
 ]

@@ -1,14 +1,6 @@
 import { cn } from '@udecode/cn'
-import type {
-  SlateEditor,
-  SlateElementProps,
-  TElement
-} from '@udecode/plate-common'
-import {
-  getNodeEntries,
-  getNodeString,
-  SlateElement
-} from '@udecode/plate-common'
+import type { SlateEditor, SlateElementProps, TElement } from '@udecode/plate'
+import { NodeApi, SlateElement } from '@udecode/plate'
 import {
   BaseTocPlugin,
   HEADING_KEYS,
@@ -48,9 +40,7 @@ export function TocElementStatic({
             <Button
               key={item.title}
               variant="ghost"
-              className={cn(
-                headingItemVariants({ depth: item.depth as 1 | 2 | 3 })
-              )}
+              className={cn(headingItemVariants({ depth: item.depth as any }))}
             >
               {item.title}
             </Button>
@@ -86,7 +76,7 @@ const getHeadingList = (editor?: SlateEditor) => {
 
   const headingList: Heading[] = []
 
-  const values = getNodeEntries(editor, {
+  const values = editor.api.nodes<TElement>({
     at: [],
     match: (n) => isHeading(n)
   })
@@ -94,13 +84,11 @@ const getHeadingList = (editor?: SlateEditor) => {
   if (!values) return []
 
   Array.from(values, ([node, path]) => {
-    const { type } = node as TElement
-    const title = getNodeString(node)
+    const { type } = node
+    const title = NodeApi.string(node)
     const depth = headingDepth[type]
-    const id = node.id
-    if (title) {
-      headingList.push({ id, depth, path, title, type })
-    }
+    const id = node.id as string
+    title && headingList.push({ id, depth, path, title, type })
   })
 
   return headingList

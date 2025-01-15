@@ -1,18 +1,8 @@
 import React, { useMemo } from 'react'
 import { cn, withRef } from '@udecode/cn'
+import { isType } from '@udecode/plate'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
-import { isType, someNode } from '@udecode/plate-common'
-import {
-  MemoizedChildren,
-  ParagraphPlugin,
-  useEditorPlugin,
-  useEditorRef,
-  useElement,
-  usePath,
-  type NodeWrapperComponent,
-  type PlateRenderElementProps
-} from '@udecode/plate-common/react'
 import { useDraggable, useDropLine } from '@udecode/plate-dnd'
 import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
@@ -29,8 +19,19 @@ import {
   TableRowPlugin
 } from '@udecode/plate-table/react'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
+import {
+  MemoizedChildren,
+  ParagraphPlugin,
+  useEditorPlugin,
+  useEditorRef,
+  useElement,
+  usePath,
+  useReadOnly,
+  useSelected,
+  type NodeWrapperComponent,
+  type PlateRenderElementProps
+} from '@udecode/plate/react'
 import { GripVertical } from 'lucide-react'
-import { useReadOnly, useSelected } from 'slate-react'
 
 import { STRUCTURAL_TYPES } from '@/components/editor/transforms'
 
@@ -58,7 +59,7 @@ export const DraggableAboveNodes: NodeWrapperComponent = (props) => {
       return true
     }
     if (path.length === 3 && !isType(editor, element, UNDRAGGABLE_KEYS)) {
-      const block = someNode(editor, {
+      const block = editor.api.some({
         at: path,
         match: {
           type: editor.getType(ColumnPlugin)
@@ -70,7 +71,7 @@ export const DraggableAboveNodes: NodeWrapperComponent = (props) => {
       }
     }
     if (path.length === 4 && !isType(editor, element, UNDRAGGABLE_KEYS)) {
-      const block = someNode(editor, {
+      const block = editor.api.some({
         at: path,
         match: {
           type: editor.getType(TablePlugin)
@@ -91,12 +92,12 @@ export const DraggableAboveNodes: NodeWrapperComponent = (props) => {
 }
 
 export const Draggable = withRef<'div', PlateRenderElementProps>(
-  ({ className, ...props }, ref) => {
+  ({ ...props }, ref) => {
     const { children, editor, element, path } = props
     const { isDragging, previewRef, handleRef } = useDraggable({ element })
 
-    const isInColumn = path?.length === 3
-    const isInTable = path?.length === 4
+    const isInColumn = path.length === 3
+    const isInTable = path.length === 4
 
     return (
       <div
@@ -104,10 +105,7 @@ export const Draggable = withRef<'div', PlateRenderElementProps>(
         className={cn(
           'relative',
           isDragging && 'opacity-50',
-          STRUCTURAL_TYPES.includes(element.type)
-            ? 'group/structural'
-            : 'group',
-          className
+          STRUCTURAL_TYPES.includes(element.type) ? 'group/structural' : 'group'
         )}
       >
         <Gutter>
@@ -162,8 +160,8 @@ const Gutter = React.forwardRef<
 
   const isNodeType = (keys: string[] | string) => isType(editor, element, keys)
 
-  const isInColumn = path?.length === 3
-  const isInTable = path?.length === 4
+  const isInColumn = path.length === 3
+  const isInTable = path.length === 4
 
   return (
     <div

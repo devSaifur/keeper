@@ -1,5 +1,5 @@
 import { cn } from '@udecode/cn'
-import { PlateStatic, type PlateStaticProps } from '@udecode/plate-common'
+import { PlateStatic, type PlateStaticProps } from '@udecode/plate'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 

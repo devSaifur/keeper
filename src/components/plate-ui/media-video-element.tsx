@@ -1,8 +1,9 @@
 import { cn, withRef } from '@udecode/cn'
-import { useEditorMounted, withHOC } from '@udecode/plate-common/react'
+import { useDraggable } from '@udecode/plate-dnd'
 import { parseTwitterUrl, parseVideoUrl } from '@udecode/plate-media'
 import { useMediaState } from '@udecode/plate-media/react'
 import { ResizableProvider, useResizableStore } from '@udecode/plate-resizable'
+import { useEditorMounted, withHOC } from '@udecode/plate/react'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import ReactPlayer from 'react-player'
 
@@ -30,6 +31,10 @@ export const MediaVideoElement = withHOC(
 
       const isTweet = true
 
+      const { isDragging, handleRef } = useDraggable({
+        element: props.element
+      })
+
       return (
         <PlateElement ref={ref} className={cn(className, 'py-2.5')} {...props}>
           <figure
@@ -37,6 +42,7 @@ export const MediaVideoElement = withHOC(
             contentEditable={false}
           >
             <Resizable
+              className={cn(isDragging && 'opacity-50')}
               align={align}
               options={{
                 align,
@@ -57,7 +63,7 @@ export const MediaVideoElement = withHOC(
                 />
 
                 {!isUpload && isYoutube && (
-                  <div>
+                  <div ref={handleRef}>
                     <LiteYouTubeEmbed
                       id={embed!.id!}
                       title="youtube"
@@ -84,7 +90,7 @@ export const MediaVideoElement = withHOC(
 
                 {/* TODO: Lazy load */}
                 {isUpload && isEditorMounted && (
-                  <div>
+                  <div ref={handleRef}>
                     <ReactPlayer
                       height="100%"
                       url={unsafeUrl}

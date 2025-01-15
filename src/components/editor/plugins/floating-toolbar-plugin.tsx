@@ -1,4 +1,4 @@
-import { createPlatePlugin } from '@udecode/plate-common/react'
+import { createPlatePlugin } from '@udecode/plate/react'
 
 import { FloatingToolbar } from '@/components/plate-ui/floating-toolbar'
 import { FloatingToolbarButtons } from '@/components/plate-ui/floating-toolbar-buttons'

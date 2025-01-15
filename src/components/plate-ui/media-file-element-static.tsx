@@ -1,6 +1,6 @@
 import { cn } from '@udecode/cn'
-import type { SlateElementProps } from '@udecode/plate-common'
-import { SlateElement } from '@udecode/plate-common'
+import type { SlateElementProps } from '@udecode/plate'
+import { SlateElement } from '@udecode/plate'
 import type { TFileElement } from '@udecode/plate-media'
 import { FileUp } from 'lucide-react'
 

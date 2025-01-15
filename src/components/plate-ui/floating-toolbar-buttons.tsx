@@ -5,7 +5,7 @@ import {
   StrikethroughPlugin,
   UnderlinePlugin
 } from '@udecode/plate-basic-marks/react'
-import { useEditorReadOnly } from '@udecode/plate-common/react'
+import { useEditorReadOnly } from '@udecode/plate/react'
 import {
   BoldIcon,
   Code2Icon,
@@ -14,6 +14,7 @@ import {
   UnderlineIcon
 } from 'lucide-react'
 
+import { CommentToolbarButton } from './comment-toolbar-button'
 import { InlineEquationToolbarButton } from './inline-equation-toolbar-button'
 import { LinkToolbarButton } from './link-toolbar-button'
 import { MarkToolbarButton } from './mark-toolbar-button'
@@ -67,7 +68,11 @@ export function FloatingToolbarButtons() {
         </>
       )}
 
-      <ToolbarGroup>{!readOnly && <MoreDropdownMenu />}</ToolbarGroup>
+      <ToolbarGroup>
+        <CommentToolbarButton />
+
+        {!readOnly && <MoreDropdownMenu />}
+      </ToolbarGroup>
     </>
   )
 }

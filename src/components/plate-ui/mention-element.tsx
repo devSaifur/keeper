@@ -1,9 +1,8 @@
 import React from 'react'
 import { cn, withRef } from '@udecode/cn'
-import { getHandler, IS_APPLE } from '@udecode/plate-common'
-import { useElement } from '@udecode/plate-common/react'
+import { getHandler, IS_APPLE } from '@udecode/plate'
 import type { TMentionElement } from '@udecode/plate-mention'
-import { useFocused, useReadOnly, useSelected } from 'slate-react'
+import { useFocused, useReadOnly, useSelected } from '@udecode/plate/react'
 
 import { useMounted } from '@/hooks/use-mounted'
 
@@ -13,10 +12,10 @@ export const MentionElement = withRef<
   typeof PlateElement,
   {
     prefix?: string
-    onClick?: (mentionNode: TMentionElement) => void
+    onClick?: (mentionNode: any) => void
   }
 >(({ children, className, prefix, onClick, ...props }, ref) => {
-  const element = useElement<TMentionElement>()
+  const element = props.element as TMentionElement
   const selected = useSelected()
   const focused = useFocused()
   const mounted = useMounted()

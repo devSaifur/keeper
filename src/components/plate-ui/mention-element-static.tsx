@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn } from '@udecode/cn'
-import type { SlateElementProps } from '@udecode/plate-common'
-import { IS_APPLE, SlateElement } from '@udecode/plate-common'
+import type { SlateElementProps } from '@udecode/plate'
+import { IS_APPLE, SlateElement } from '@udecode/plate'
 import type { TMentionElement } from '@udecode/plate-mention'
 
 export function MentionElementStatic({

@@ -1,5 +1,5 @@
-import { useEditorRef, withRef } from '@udecode/plate-common/react'
 import { insertInlineEquation } from '@udecode/plate-math'
+import { useEditorRef, withRef } from '@udecode/plate/react'
 import { RadicalIcon } from 'lucide-react'
 
 import { ToolbarButton } from './toolbar'

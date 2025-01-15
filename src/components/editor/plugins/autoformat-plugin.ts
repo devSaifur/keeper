@@ -1,3 +1,5 @@
+import type { SlateEditor } from '@udecode/plate'
+import { ElementApi, isType } from '@udecode/plate'
 import type { AutoformatRule } from '@udecode/plate-autoformat'
 import {
   autoformatArrow,
@@ -23,15 +25,6 @@ import {
   CodeBlockPlugin,
   CodeLinePlugin
 } from '@udecode/plate-code-block/react'
-import type { SlateEditor } from '@udecode/plate-common'
-import {
-  getParentNode,
-  insertNodes,
-  isElement,
-  isType,
-  setNodes
-} from '@udecode/plate-common'
-import { ParagraphPlugin } from '@udecode/plate-common/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { HighlightPlugin } from '@udecode/plate-highlight/react'
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react'
@@ -41,17 +34,18 @@ import {
   toggleIndentList
 } from '@udecode/plate-indent-list'
 import { openNextToggles, TogglePlugin } from '@udecode/plate-toggle/react'
+import { ParagraphPlugin } from '@udecode/plate/react'
 
-export const format = (editor: SlateEditor, customFormatting: () => void) => {
+export const format = (editor: SlateEditor, customFormatting: any) => {
   if (editor.selection) {
-    const parentEntry = getParentNode(editor, editor.selection)
+    const parentEntry = editor.api.parent(editor.selection)
 
     if (!parentEntry) return
 
     const [node] = parentEntry
 
     if (
-      isElement(node) &&
+      ElementApi.isElement(node) &&
       !isType(editor, node, CodeBlockPlugin.key) &&
       !isType(editor, node, CodeLinePlugin.key)
     ) {
@@ -189,8 +183,8 @@ export const autoformatBlocks: AutoformatRule[] = [
   },
   {
     format: (editor) => {
-      setNodes(editor, { type: HorizontalRulePlugin.key })
-      insertNodes(editor, {
+      editor.tf.setNodes({ type: HorizontalRulePlugin.key })
+      editor.tf.insertNodes({
         children: [{ text: '' }],
         type: ParagraphPlugin.key
       })
@@ -227,7 +221,7 @@ export const autoformatIndentLists: AutoformatRule[] = [
       toggleIndentList(editor, {
         listStyleType: INDENT_LIST_KEYS.todo
       })
-      setNodes(editor, {
+      editor.tf.setNodes({
         checked: false,
         listStyleType: INDENT_LIST_KEYS.todo
       })
@@ -241,7 +235,7 @@ export const autoformatIndentLists: AutoformatRule[] = [
       toggleIndentList(editor, {
         listStyleType: INDENT_LIST_KEYS.todo
       })
-      setNodes(editor, {
+      editor.tf.setNodes({
         checked: true,
         listStyleType: INDENT_LIST_KEYS.todo
       })

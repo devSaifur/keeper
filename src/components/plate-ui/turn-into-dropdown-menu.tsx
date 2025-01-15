@@ -2,16 +2,14 @@ import React from 'react'
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
-import type { TElement } from '@udecode/plate-common'
-import {
-  focusEditor,
-  ParagraphPlugin,
-  useEditorRef,
-  useSelectionFragmentProp
-} from '@udecode/plate-common/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
+import {
+  ParagraphPlugin,
+  useEditorRef,
+  useSelectionFragmentProp
+} from '@udecode/plate/react'
 import {
   ChevronRightIcon,
   Columns3Icon,
@@ -116,7 +114,7 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
 
   const value = useSelectionFragmentProp({
     defaultValue: ParagraphPlugin.key,
-    getProp: (node) => getBlockType(node as TElement),
+    getProp: (node) => getBlockType(node as any),
     structuralTypes: STRUCTURAL_TYPES
   })
   const selectedItem = React.useMemo(
@@ -139,7 +137,7 @@ export function TurnIntoDropdownMenu(props: DropdownMenuProps) {
         className="ignore-click-outside/toolbar min-w-0"
         onCloseAutoFocus={(e) => {
           e.preventDefault()
-          focusEditor(editor)
+          editor.tf.focus()
         }}
         align="start"
       >

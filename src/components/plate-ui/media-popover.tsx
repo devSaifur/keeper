@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react'
-import {
-  isSelectionExpanded,
-  type WithRequiredKey
-} from '@udecode/plate-common'
-import {
-  useEditorSelector,
-  useElement,
-  useRemoveNodeButton
-} from '@udecode/plate-common/react'
+import type { WithRequiredKey } from '@udecode/plate'
 import {
   floatingMediaActions,
   FloatingMedia as FloatingMediaPrimitive,
   useFloatingMediaSelectors
 } from '@udecode/plate-media/react'
+import {
+  useEditorSelector,
+  useElement,
+  useReadOnly,
+  useRemoveNodeButton,
+  useSelected
+} from '@udecode/plate/react'
 import { Link, Trash2Icon } from 'lucide-react'
-import { useReadOnly, useSelected } from 'slate-react'
 
 import { Button, buttonVariants } from './button'
 import { CaptionButton } from './caption'
@@ -32,7 +30,7 @@ export function MediaPopover({ children, plugin }: MediaPopoverProps) {
   const selected = useSelected()
 
   const selectionCollapsed = useEditorSelector(
-    (editor) => !isSelectionExpanded(editor),
+    (editor) => !editor.api.isExpanded(),
     []
   )
   const isOpen = !readOnly && selected && selectionCollapsed

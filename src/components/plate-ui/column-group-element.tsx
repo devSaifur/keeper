@@ -1,23 +1,14 @@
 import React from 'react'
 import { cn, withRef } from '@udecode/cn'
-import { findNodePath } from '@udecode/plate-common'
+import { setColumns, type TColumnElement } from '@udecode/plate-layout'
+import { useDebouncePopoverOpen } from '@udecode/plate-layout/react'
 import {
   useEditorRef,
   useElement,
+  useReadOnly,
   useRemoveNodeButton
-} from '@udecode/plate-common/react'
-import {
-  setColumns,
-  type TColumnElement,
-  type TColumnGroupElement
-} from '@udecode/plate-layout'
-import {
-  ColumnItemPlugin,
-  ColumnPlugin,
-  useDebouncePopoverOpen
-} from '@udecode/plate-layout/react'
+} from '@udecode/plate/react'
 import { Trash2Icon, type LucideProps } from 'lucide-react'
-import { useReadOnly } from 'slate-react'
 
 import { Button } from './button'
 import { PlateElement } from './plate-element'
@@ -39,9 +30,7 @@ export const ColumnGroupElement = withRef<typeof PlateElement>(
 export function ColumnFloatingToolbar({ children }: React.PropsWithChildren) {
   const editor = useEditorRef()
   const readOnly = useReadOnly()
-
-  const element = useElement<TColumnElement>(ColumnItemPlugin.key)
-  const columnGroupElement = useElement<TColumnGroupElement>(ColumnPlugin.key)
+  const element = useElement<TColumnElement>()
 
   const { props: buttonProps } = useRemoveNodeButton({ element })
 
@@ -49,7 +38,7 @@ export function ColumnFloatingToolbar({ children }: React.PropsWithChildren) {
 
   const onColumnChange = (widths: string[]) => {
     setColumns(editor, {
-      at: findNodePath(editor, columnGroupElement),
+      at: element,
       widths
     })
   }

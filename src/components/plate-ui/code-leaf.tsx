@@ -1,5 +1,5 @@
 import { cn, withRef } from '@udecode/cn'
-import { PlateLeaf } from '@udecode/plate-common/react'
+import { PlateLeaf } from '@udecode/plate/react'
 
 export const CodeLeaf = withRef<typeof PlateLeaf>(
   ({ children, className, ...props }, ref) => {

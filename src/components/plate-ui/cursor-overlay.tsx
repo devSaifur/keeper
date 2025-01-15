@@ -1,5 +1,5 @@
 import { cn } from '@udecode/cn'
-import { isCollapsed } from '@udecode/plate-common'
+import { RangeApi } from '@udecode/plate'
 import {
   useCursorOverlay,
   type CursorData,
@@ -14,7 +14,7 @@ export function Cursor({
   selectionRects
 }: CursorOverlayState<CursorData>) {
   const { style, selectionStyle = style } = data ?? ({} as CursorData)
-  const isCursor = isCollapsed(selection)
+  const isCursor = RangeApi.isCollapsed(selection)
 
   return (
     <>

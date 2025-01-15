@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { withRef } from '@udecode/cn'
 import { EmojiInlineIndexSearch, insertEmoji } from '@udecode/plate-emoji'
-import { useDebounceValue } from 'usehooks-ts'
+
+import { useDebounce } from '@/hooks/use-debounce'
 
 import {
   InlineCombobox,
@@ -17,7 +18,7 @@ export const EmojiInputElement = withRef<typeof PlateElement>(
   ({ className, ...props }, ref) => {
     const { children, editor, element } = props
     const [value, setValue] = useState('')
-    const [debouncedValue] = useDebounceValue(value, 100)
+    const debouncedValue = useDebounce(value, 100)
     const isPending = value !== debouncedValue
 
     const filteredEmojis = useMemo(() => {

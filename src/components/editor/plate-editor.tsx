@@ -1,6 +1,8 @@
 import type { Note } from '@/local/db'
 import { saveToDB } from '@/local/sync'
-import { Plate } from '@udecode/plate-common/react'
+import { Plate } from '@udecode/plate/react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { Button } from '@/components/ui/button'
 import { SettingsDialog } from '@/components/editor/settings'
@@ -26,12 +28,14 @@ export function PlateEditor() {
 
   return (
     <div className="mx-auto flex w-full max-w-min flex-col">
-      <Plate editor={editor}>
-        <SettingsDialog />
-        <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent px-3 pb-4 pt-2">
-          <Editor variant="none" placeholder="Take a note..." />
-        </EditorContainer>
-      </Plate>
+      <DndProvider backend={HTML5Backend}>
+        <Plate editor={editor}>
+          <SettingsDialog />
+          <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent px-3 pb-4 pt-2">
+            <Editor variant="none" placeholder="Take a note..." />
+          </EditorContainer>
+        </Plate>
+      </DndProvider>
       <Button onClick={handleSave} className="ml-auto">
         Save
       </Button>

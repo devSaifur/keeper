@@ -77,7 +77,6 @@ import { MediaVideoElement } from '@/components/plate-ui/media-video-element'
 import { MentionElement } from '@/components/plate-ui/mention-element'
 import { MentionInputElement } from '@/components/plate-ui/mention-input-element'
 import { ParagraphElement } from '@/components/plate-ui/paragraph-element'
-import { withPlaceholders } from '@/components/plate-ui/placeholder'
 import { SlashInputElement } from '@/components/plate-ui/slash-input-element'
 import {
   TableCellElement,
@@ -91,7 +90,7 @@ import { ToggleElement } from '@/components/plate-ui/toggle-element'
 export const useCreateEditor = () => {
   return usePlateEditor({
     override: {
-      components: withPlaceholders({
+      components: {
         [AudioPlugin.key]: MediaAudioElement,
         [BlockquotePlugin.key]: BlockquoteElement,
         [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
@@ -137,24 +136,8 @@ export const useCreateEditor = () => {
         [TogglePlugin.key]: ToggleElement,
         [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
         [VideoPlugin.key]: MediaVideoElement
-      })
-    },
-    plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin],
-    value: [
-      {
-        children: [{ text: 'Playground' }],
-        type: 'h1'
-      },
-      {
-        children: [
-          { text: 'A rich-text editor with AI capabilities. Try the ' },
-          { bold: true, text: 'AI commands' },
-          { text: ' or use ' },
-          { kbd: true, text: 'Cmd+J' },
-          { text: ' to open the AI menu.' }
-        ],
-        type: ParagraphPlugin.key
       }
-    ]
+    },
+    plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin]
   })
 }

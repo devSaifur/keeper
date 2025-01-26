@@ -51,13 +51,11 @@ export const Note = ({ note }: NoteProps) => {
     }
   }, [])
 
-  // const MotionCard = motion.create(Card)
-
   return (
     <>
       <Card
         onClick={openMenu}
-        className="group bg-card/20 transition-shadow duration-200 hover:shadow-lg"
+        className="group overflow-hidden bg-card/20 transition-shadow duration-200 hover:shadow-lg"
       >
         <CardHeader>
           <CardTitle>{note.title}</CardTitle>

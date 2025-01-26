@@ -64,7 +64,6 @@ async function addNotesSync() {
 
 async function deleteNotesSync() {
   const notes = await db.deletedNotes.toArray()
-  console.log({ notes })
 
   if (notes.length === 0) {
     return

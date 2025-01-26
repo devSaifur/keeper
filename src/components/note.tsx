@@ -19,12 +19,6 @@ interface NoteProps {
   }
 }
 
-// const TRANSITION = {
-//   type: 'spring',
-//   bounce: 0.05,
-//   duration: 0.3
-// }
-
 export const Note = ({ note }: NoteProps) => {
   const editorContainerRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)

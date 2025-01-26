@@ -87,7 +87,13 @@ import { TableRowElement } from '@/components/plate-ui/table-row-element'
 import { TocElement } from '@/components/plate-ui/toc-element'
 import { ToggleElement } from '@/components/plate-ui/toggle-element'
 
-export const useCreateEditor = () => {
+interface UseCreateEditorProps {
+  showFixedToolbar?: boolean
+}
+
+export const useCreateEditor = ({
+  showFixedToolbar = false
+}: UseCreateEditorProps = {}) => {
   return usePlateEditor({
     override: {
       components: {
@@ -138,6 +144,10 @@ export const useCreateEditor = () => {
         [VideoPlugin.key]: MediaVideoElement
       }
     },
-    plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin]
+    plugins: [
+      ...editorPlugins,
+      FloatingToolbarPlugin,
+      ...(showFixedToolbar ? [FixedToolbarPlugin] : [])
+    ]
   })
 }

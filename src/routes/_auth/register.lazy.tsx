@@ -1,12 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signUpSchema, TSignUpSchema } from '@server/lib/validators'
-import { useMutation } from '@tanstack/react-query'
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { api } from '@/lib/api'
+import { signUp } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -39,18 +38,24 @@ function RegisterPage() {
 
   const { errors } = formState
 
-  const { mutate: signUp, isPending } = useMutation({
-    mutationFn: async (data: TSignUpSchema) => {
-      const res = await api.auth['sign-up'].$post({
-        json: data
-      })
-      if (!res.ok) {
-        return toast.error('Something went wrong!')
+  const handleSignUp = async (data: TSignUpSchema) => {
+    await signUp.email(
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password
+      },
+      {
+        onSuccess: () => {
+          toast.success('Account created successfully')
+          router.invalidate()
+        },
+        onError: () => {
+          toast.error('An error occurred while creating your account')
+        }
       }
-      toast.success('Signed up successfully, you can now login.')
-      router.navigate({ to: '/login' })
-    }
-  })
+    )
+  }
 
   return (
     <Card className="mx-auto mt-40 max-w-sm">
@@ -61,7 +66,7 @@ function RegisterPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit((data) => signUp(data))}>
+        <form onSubmit={handleSubmit(handleSignUp)}>
           <div className="grid gap-8">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
@@ -84,8 +89,12 @@ function RegisterPage() {
                 <p className="text-red-500">{errors.password.message}</p>
               )}
             </div>
-            <Button type="submit" disabled={isPending} className="w-full">
-              {isPending ? (
+            <Button
+              type="submit"
+              disabled={formState.isSubmitting}
+              className="w-full"
+            >
+              {formState.isSubmitting ? (
                 <Loader2 className="size-5 animate-spin" />
               ) : (
                 'Create an account'

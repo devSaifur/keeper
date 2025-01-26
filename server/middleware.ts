@@ -1,54 +1,41 @@
 import type { Context, Next } from 'hono'
-import { getCookie } from 'hono/cookie'
 import { createMiddleware } from 'hono/factory'
-import { decode } from 'hono/jwt'
 
-import { getSession } from './lib/jwt'
+import { auth } from './lib/auth'
 import type { ENV } from './types'
 
 export async function authMiddleware(c: Context, next: Next) {
   try {
-    const token = getCookie(c, 'session') ?? null
+    const session = await auth.api.getSession({ headers: c.req.raw.headers })
 
-    if (!token) {
+    if (!session) {
       c.set('user', null)
+      c.set('session', null)
       return next()
     }
 
-    const { payload } = decode(token)
-
-    if (!payload) {
-      c.set('user', null)
-      return next()
-    }
-
-    const user = {
-      name: payload.name as string,
-      email: payload.email as string
-    }
-
-    c.set('user', user)
+    c.set('user', session.user)
+    c.set('session', session.session)
     return next()
   } catch (err) {
     console.log(err)
     c.set('user', null)
+    c.set('session', null)
     return next()
   }
 }
 
 export const getUser = createMiddleware<ENV>(async (c, next) => {
-  const payload = await getSession(c)
+  const session = await auth.api.getSession({ headers: c.req.raw.headers })
 
-  if (!payload) {
+  if (!session) {
+    c.set('user', null)
+    c.set('session', null)
     return c.json({ error: 'Unauthorized' }, 401)
   }
 
-  const user = {
-    id: payload.id as string,
-    name: payload.name as string,
-    email: payload.email as string
-  }
+  c.set('user', session.user)
+  c.set('session', session.session)
 
-  c.set('user', user)
   return next()
 })

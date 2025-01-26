@@ -1,12 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signInSchema, TSignInSchema } from '@server/lib/validators'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { api } from '@/lib/api'
+import { signIn } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -27,7 +26,6 @@ export const description =
 
 function LoginPage() {
   const router = useRouter()
-  const queryClient = useQueryClient()
 
   const { register, formState, handleSubmit } = useForm<TSignInSchema>({
     resolver: zodResolver(signInSchema),
@@ -39,18 +37,24 @@ function LoginPage() {
 
   const { errors } = formState
 
-  const { mutate: login, isPending } = useMutation({
-    mutationFn: async (data: TSignInSchema) => {
-      const res = await api.auth['sign-in'].$post({
-        json: data
-      })
-      if (!res.ok) {
-        return toast.error('Something went wrong!')
+  const handleSignIn = async (data: TSignInSchema) => {
+    await signIn.email(
+      {
+        email: data.email,
+        password: data.password
+      },
+      {
+        onSuccess: () => {
+          toast.success('Logged in successfully')
+          router.invalidate()
+        },
+        onError: (err) => {
+          console.error(err)
+          toast.error('An error occurred while logging in')
+        }
       }
-      queryClient.invalidateQueries({ queryKey: ['user'], type: 'all' })
-      router.invalidate()
-    }
-  })
+    )
+  }
 
   return (
     <Card className="mx-auto mt-40 max-w-sm">
@@ -61,7 +65,7 @@ function LoginPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit((data) => login(data))}>
+        <form onSubmit={handleSubmit(handleSignIn)}>
           <div className="grid gap-8">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -77,10 +81,7 @@ function LoginPage() {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <Link
-                  href="#"
-                  className="ml-auto inline-block text-sm underline"
-                >
+                <Link to="" className="ml-auto inline-block text-sm underline">
                   Forgot your password?
                 </Link>
               </div>
@@ -93,8 +94,12 @@ function LoginPage() {
                 <p className="text-red-500">{errors.password.message}</p>
               )}
             </div>
-            <Button type="submit" disabled={isPending} className="w-full">
-              {isPending ? (
+            <Button
+              type="submit"
+              disabled={formState.isSubmitting}
+              className="w-full"
+            >
+              {formState.isSubmitting ? (
                 <Loader2 className="size-5 animate-spin" />
               ) : (
                 'Login'

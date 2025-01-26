@@ -9,8 +9,8 @@ import { notesRoutes } from './routes/notes-routes'
 
 const api = new Hono()
   .basePath('/api')
+  .route('/auth/**', authRoutes)
   .route('/hello', hello)
-  .route('/auth', authRoutes)
   .route('/notes', notesRoutes)
 
 api.use(logger())

@@ -1,35 +1,35 @@
 import { eq, inArray } from 'drizzle-orm'
 
 import { db } from '../db'
-import { noteTable } from '../db/schema'
+import { notes } from '../db/schema'
 
 export async function getNotesByUserId(userId: string) {
   return db
     .select({
-      id: noteTable.id,
-      title: noteTable.title,
-      content: noteTable.content
+      id: notes.id,
+      title: notes.title,
+      content: notes.content
     })
-    .from(noteTable)
-    .where(eq(noteTable.userId, userId))
+    .from(notes)
+    .where(eq(notes.userId, userId))
 }
 
 export async function deleteNotesById(noteId: string[]) {
-  await db.delete(noteTable).where(inArray(noteTable.id, noteId))
+  await db.delete(notes).where(inArray(notes.id, noteId))
 }
 
 export async function addNote(
   userId: string,
-  note: { title: string; content: string }
+  newNote: { title: string; content: string }
 ) {
-  const [newNote] = await db
-    .insert(noteTable)
+  const [insertedNote] = await db
+    .insert(notes)
     .values({
-      title: note.title,
-      content: note.content,
+      title: newNote.title,
+      content: newNote.content,
       userId
     })
     .returning()
 
-  return newNote
+  return insertedNote
 }

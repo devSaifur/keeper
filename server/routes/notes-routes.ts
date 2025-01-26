@@ -7,7 +7,7 @@ import { getUser } from '../middleware'
 
 export const notesRoutes = new Hono()
   .get('/', getUser, async (c) => {
-    const { id: userId } = c.get('user')
+    const userId = c.get('user')?.id as string
 
     const notes = await getNotesByUserId(userId)
 
@@ -27,7 +27,7 @@ export const notesRoutes = new Hono()
     ),
     getUser,
     async (c) => {
-      const { id: userId } = c.get('user')
+      const userId = c.get('user')?.id as string
       const notesToSync = c.req.valid('json')
 
       const results = await Promise.all(

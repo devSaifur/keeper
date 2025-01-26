@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { Note } from '@/local/db'
 import { saveToDB } from '@/local/sync'
 import { Plate } from '@udecode/plate/react'
@@ -16,8 +15,7 @@ import { useCreateEditor } from '@/components/editor/use-create-editor'
 import { Editor, EditorContainer } from '@/components/plate-ui/editor'
 
 export const AddNote = () => {
-  const [isFullScreen, setIsFullScreen] = useState(false)
-  const editor = useCreateEditor({ showFixedToolbar: isFullScreen })
+  const editor = useCreateEditor()
 
   async function handleSave() {
     const content = editor.api.markdown.serialize()
@@ -45,8 +43,7 @@ export const AddNote = () => {
       </DialogTrigger>
       <DialogContent className="min-w-max pb-4 pt-12">
         <div
-          onClick={() => setIsFullScreen(!isFullScreen)}
-          role="button"
+          // onClick={() => setIsFullScreen((prev) => !prev)}
           className="absolute right-12 top-4 cursor-pointer rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
         >
           <MaximizeIcon className="size-4" />
@@ -57,7 +54,7 @@ export const AddNote = () => {
           <Plate editor={editor}>
             <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
               <Editor
-                variant={isFullScreen ? 'fullWidth' : 'none'}
+                variant="none"
                 placeholder="Take a note..."
                 className="max-h-screen min-h-80 p-4"
               />

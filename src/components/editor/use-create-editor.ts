@@ -33,7 +33,6 @@ import {
   PlaceholderPlugin,
   VideoPlugin
 } from '@udecode/plate-media/react'
-import { MentionInputPlugin, MentionPlugin } from '@udecode/plate-mention/react'
 import { SlashInputPlugin } from '@udecode/plate-slash-command/react'
 import {
   TableCellHeaderPlugin,
@@ -74,8 +73,6 @@ import { MediaEmbedElement } from '@/components/plate-ui/media-embed-element'
 import { MediaFileElement } from '@/components/plate-ui/media-file-element'
 import { MediaPlaceholderElement } from '@/components/plate-ui/media-placeholder-element'
 import { MediaVideoElement } from '@/components/plate-ui/media-video-element'
-import { MentionElement } from '@/components/plate-ui/mention-element'
-import { MentionInputElement } from '@/components/plate-ui/mention-input-element'
 import { ParagraphElement } from '@/components/plate-ui/paragraph-element'
 import { SlashInputElement } from '@/components/plate-ui/slash-input-element'
 import {
@@ -126,8 +123,6 @@ export const useCreateEditor = ({
         [KbdPlugin.key]: KbdLeaf,
         [LinkPlugin.key]: LinkElement,
         [MediaEmbedPlugin.key]: MediaEmbedElement,
-        [MentionInputPlugin.key]: MentionInputElement,
-        [MentionPlugin.key]: MentionElement,
         [ParagraphPlugin.key]: ParagraphElement,
         [PlaceholderPlugin.key]: MediaPlaceholderElement,
         [SlashInputPlugin.key]: SlashInputElement,

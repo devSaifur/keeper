@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signUpSchema, TSignUpSchema } from '@server/lib/validators'
-import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { signInSchema, TSignInSchema } from '@server/lib/validators'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { signUp } from '@/lib/auth-client'
+import { signIn } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -17,20 +17,20 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-export const Route = createLazyFileRoute('/_auth/register')({
-  component: RegisterPage
+export const Route = createFileRoute('/_auth/login')({
+  component: LoginPage,
+  ssr: true
 })
 
 export const description =
-  "A sign up form with first name, last name, email and password inside a card. There's an option to sign up with GitHub and a link to login if you already have an account"
+  "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account."
 
-function RegisterPage() {
+function LoginPage() {
   const router = useRouter()
 
-  const { register, formState, handleSubmit } = useForm<TSignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  const { register, formState, handleSubmit } = useForm<TSignInSchema>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      name: '',
       email: '',
       password: ''
     }
@@ -38,20 +38,20 @@ function RegisterPage() {
 
   const { errors } = formState
 
-  const handleSignUp = async (data: TSignUpSchema) => {
-    await signUp.email(
+  const handleSignIn = async (data: TSignInSchema) => {
+    await signIn.email(
       {
-        name: data.name,
         email: data.email,
         password: data.password
       },
       {
         onSuccess: () => {
-          toast.success('Account created successfully')
+          toast.success('Logged in successfully')
           router.invalidate()
         },
-        onError: () => {
-          toast.error('An error occurred while creating your account')
+        onError: (err) => {
+          console.error(err)
+          toast.error('An error occurred while logging in')
         }
       }
     )
@@ -60,31 +60,37 @@ function RegisterPage() {
   return (
     <Card className="mx-auto mt-40 max-w-sm">
       <CardHeader>
-        <CardTitle className="text-xl">Sign Up</CardTitle>
+        <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
-          Enter your information to create an account
+          Enter your email below to login to your account
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit(handleSignUp)}>
+        <form onSubmit={handleSubmit(handleSignIn)}>
           <div className="grid gap-8">
             <div className="grid gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input {...register('name')} placeholder="Max Robinson" />
-              {errors.name && (
-                <p className="text-red-500">{errors.name.message}</p>
-              )}
-            </div>
-            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input {...register('email')} placeholder="m@example.com" />
+              <Input
+                {...register('email')}
+                placeholder="m@example.com"
+                autoComplete="email"
+              />
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
               )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input {...register('password')} type="password" />
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+                <Link to="" className="ml-auto inline-block text-sm underline">
+                  Forgot your password?
+                </Link>
+              </div>
+              <Input
+                {...register('password')}
+                type="password"
+                autoComplete="current-password"
+              />
               {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
               )}
@@ -97,15 +103,15 @@ function RegisterPage() {
               {formState.isSubmitting ? (
                 <Loader2 className="size-5 animate-spin" />
               ) : (
-                'Create an account'
+                'Login'
               )}
             </Button>
           </div>
         </form>
-        <div className="mt-4 text-center text-sm">
-          Already have an account?{' '}
-          <Link to="/login" className="underline">
-            Sign in
+        <div className="mt-8 text-center text-sm">
+          Don&apos;t have an account?{' '}
+          <Link to="/register" className="underline">
+            Sign up
           </Link>
         </div>
       </CardContent>

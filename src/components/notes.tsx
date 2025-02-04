@@ -13,7 +13,7 @@ export default function Notes() {
   const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
 
   return (
-    <div className="grid auto-rows-max grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid auto-rows-max grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 md:px-10 lg:grid-cols-4">
       {sortedNotes.map((note) => (
         <Note key={note.id} note={note} />
       ))}

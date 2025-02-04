@@ -49,7 +49,7 @@ export const Note = ({ note }: NoteProps) => {
     <>
       <Card
         onClick={openMenu}
-        className="group overflow-hidden bg-card/20 transition-shadow duration-200 hover:shadow-lg"
+        className="group overflow-hidden rounded-md bg-card/20 transition-shadow duration-200 hover:shadow-lg"
       >
         <CardHeader>
           <CardTitle>{note.title}</CardTitle>

@@ -2,8 +2,6 @@ import db, { type DeletedNote } from '@/local/db'
 import { deleteFromDB } from '@/local/sync'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { api } from '@/lib/api'
-
 export const useDeleteNotes = () => {
   const queryClient = useQueryClient()
   return useMutation({
@@ -25,10 +23,6 @@ export const useDeleteNotes = () => {
         await db.notes.delete(noteId)
         // store the deletions table
         await db.deletedNotes.add(deletedNote)
-
-        await api.notes[':id'].$delete({
-          param: noteId
-        })
 
         // refresh local notes
         const notes = await db.notes.toArray()

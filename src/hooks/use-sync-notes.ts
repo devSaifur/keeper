@@ -1,11 +1,9 @@
 import db, { Note } from '@/local/db'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 
 export const useSyncNotes = () => {
-  const queryClient = useQueryClient()
-
   return useMutation({
     mutationFn: async (notes: Note[]) => {
       const notesToSync = notes.filter((note) => note.syncStatus === 'pending')
@@ -50,10 +48,6 @@ export const useSyncNotes = () => {
               }
             })
           )
-
-          // refresh local notes
-          const notes = await db.notes.toArray()
-          queryClient.setQueryData(['local-notes'], notes)
         }
       } catch {
         throw new Error('Error syncing notes')

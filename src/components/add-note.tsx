@@ -24,7 +24,7 @@ export const AddNote = () => {
       id: crypto.randomUUID(),
       title: '',
       content,
-      lastModified: Date.now(),
+      createdAt: new Date().toISOString(),
       syncStatus: 'pending',
       serverId: ''
     } as Note
@@ -36,7 +36,7 @@ export const AddNote = () => {
       <DialogTrigger asChild>
         <Button
           asChild
-          className="absolute bottom-20 right-20 size-16 cursor-pointer rounded-full shadow-2xl"
+          className="fixed bottom-14 right-14 z-50 size-16 cursor-pointer rounded-full shadow-2xl md:bottom-20 md:right-16"
         >
           <PlusIcon className="size-14 text-background" />
         </Button>

@@ -7,6 +7,7 @@ export interface Note {
   syncStatus: 'pending' | 'synced' | 'error'
   lastModified: number
   serverId?: string
+  createdAt: string
 }
 
 export interface DeletedNote {

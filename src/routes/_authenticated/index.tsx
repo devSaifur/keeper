@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_authenticated/')({
 
 function HomeComponent() {
   return (
-    <div className="p-2">
+    <div className="relative min-h-screen p-2">
       <Notes />
       <AddNote />
     </div>

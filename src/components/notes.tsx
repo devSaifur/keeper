@@ -10,7 +10,9 @@ export default function Notes() {
     return null
   }
 
-  const sortedNotes = notes.sort((a, b) => b.lastModified - a.lastModified)
+  const sortedNotes = notes.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
 
   return (
     <div className="grid auto-rows-max grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 md:px-10 lg:grid-cols-4">

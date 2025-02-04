@@ -1,9 +1,8 @@
 import db, { type DeletedNote } from '@/local/db'
 import { deleteFromDB } from '@/local/sync'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 export const useDeleteNotes = () => {
-  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (noteId: string) => {
       try {
@@ -24,9 +23,6 @@ export const useDeleteNotes = () => {
         // store the deletions table
         await db.deletedNotes.add(deletedNote)
 
-        // refresh local notes
-        const notes = await db.notes.toArray()
-        queryClient.setQueryData(['local-notes'], notes)
         return { success: true }
       } catch (err) {
         console.error(`Error deleting note: ${err}`)

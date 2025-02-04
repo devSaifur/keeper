@@ -85,11 +85,12 @@ import { TocElement } from '@/components/plate-ui/toc-element'
 import { ToggleElement } from '@/components/plate-ui/toggle-element'
 
 interface UseCreateEditorProps {
+  value?: string
   showFixedToolbar?: boolean
 }
 
 export const useCreateEditor = ({
-  showFixedToolbar = false
+  showFixedToolbar
 }: UseCreateEditorProps = {}) => {
   return usePlateEditor({
     override: {

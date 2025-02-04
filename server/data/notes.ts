@@ -4,11 +4,12 @@ import { db } from '../db'
 import { notes } from '../db/schema'
 
 export async function getNotesByUserId(userId: string) {
-  return db
+  return await db
     .select({
       id: notes.id,
       title: notes.title,
-      content: notes.content
+      content: notes.content,
+      cratedAt: notes.createdAt
     })
     .from(notes)
     .where(eq(notes.userId, userId))

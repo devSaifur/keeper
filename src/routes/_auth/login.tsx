@@ -1,3 +1,4 @@
+import { getNotesFromServerAndSaveToDB } from '@/local/sync'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signInSchema, TSignInSchema } from '@server/lib/validators'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
@@ -45,12 +46,12 @@ function LoginPage() {
         password: data.password
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await getNotesFromServerAndSaveToDB()
           toast.success('Logged in successfully')
           router.invalidate()
         },
-        onError: (err) => {
-          console.error(err)
+        onError: () => {
           toast.error('An error occurred while logging in')
         }
       }

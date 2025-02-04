@@ -4,13 +4,11 @@ import { logger } from 'hono/logger'
 
 import { authMiddleware } from './middleware'
 import { authRoutes } from './routes/auth-routes'
-import { hello } from './routes/hello'
 import { notesRoutes } from './routes/notes-routes'
 
 const api = new Hono()
   .basePath('/api')
   .route('/auth/**', authRoutes)
-  .route('/hello', hello)
   .route('/notes', notesRoutes)
 
 api.use(logger())

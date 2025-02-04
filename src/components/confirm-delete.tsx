@@ -28,13 +28,13 @@ export const ConfirmDelete = ({ noteId }: ConfirmDeleteProps) => {
     toast.success('Note deleted successfully')
   }
 
-  const handleOpen = (e: React.MouseEvent) => {
+  const handlePropagation = (e: React.MouseEvent) => {
     e.stopPropagation()
   }
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger onClick={handleOpen}>
+      <AlertDialogTrigger onClick={handlePropagation}>
         <Button size="icon" variant="ghost">
           <TrashIcon className="text-red-700" strokeWidth={3} />
         </Button>
@@ -48,9 +48,14 @@ export const ConfirmDelete = ({ noteId }: ConfirmDeleteProps) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={handlePropagation}>
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction
-            onClick={async () => await handleDelete(noteId)}
+            onClick={async (e) => {
+              e.stopPropagation()
+              await handleDelete(noteId)
+            }}
             className="bg-red-700 text-white hover:bg-red-800"
           >
             Continue

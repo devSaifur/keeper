@@ -1,5 +1,3 @@
-import { toast } from 'sonner'
-
 import { api } from '@/lib/api'
 
 import db from './db'
@@ -31,8 +29,6 @@ async function addNotesSync() {
 
     const { results } = await res.json()
 
-    toast.success(`Synced ${results.length} notes`)
-
     if (results.length > 0) {
       // update local notes sync status and server id
       await Promise.all(
@@ -46,8 +42,6 @@ async function addNotesSync() {
                 serverId: syncedNote.serverId as string,
                 lastModified: Date.now()
               })
-
-            toast.success(`Notes successfully synced`)
           } else {
             await db.notes.where('id').equals(syncedNote.noteId).modify({
               syncStatus: 'error',

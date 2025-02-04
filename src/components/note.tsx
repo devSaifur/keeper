@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { Plate } from '@udecode/plate/react'
 
+import { cn } from '@/lib/utils'
 import {
   Card,
   CardContent,
@@ -7,9 +8,13 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { useCreateEditor } from '@/components/editor/use-create-editor'
+import { Editor, EditorContainer } from '@/components/plate-ui/editor'
 
 import { ConfirmDelete } from './confirm-delete'
 import Markdown from './markdown'
+import { buttonVariants } from './ui/button'
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
 
 interface NoteProps {
   note: {
@@ -20,58 +25,44 @@ interface NoteProps {
 }
 
 export const Note = ({ note }: NoteProps) => {
-  const editorContainerRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState(false)
-
-  const openMenu = () => {
-    setIsOpen(true)
-  }
-
-  const closeMenu = () => {
-    setIsOpen(false)
-  }
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeMenu()
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
+  const editor = useCreateEditor()
 
   return (
-    <>
-      <Card
-        onClick={openMenu}
-        className="group overflow-hidden rounded-md bg-card/20 transition-shadow duration-200 hover:shadow-lg"
-      >
-        <CardHeader>
-          <CardTitle>{note.title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Markdown>{note.content}</Markdown>
-        </CardContent>
-        <CardFooter className="justify-end group-hover:visible">
-          <ConfirmDelete noteId={note.id} />
-        </CardFooter>
-      </Card>
-
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-          <div
-            ref={editorContainerRef}
-            className="relative flex h-[26rem] w-[42rem] flex-col overflow-hidden bg-white px-2 py-4 outline-none dark:bg-zinc-700"
-          >
-            <p>hello</p>
-          </div>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Card className="group overflow-hidden rounded-md bg-card/20 transition-shadow duration-200 hover:shadow-lg">
+          <CardHeader>
+            <CardTitle>{note.title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Markdown>{note.content}</Markdown>
+          </CardContent>
+          <CardFooter className="justify-end group-hover:visible">
+            <ConfirmDelete noteId={note.id} />
+          </CardFooter>
+        </Card>
+      </DialogTrigger>
+      <DialogContent className="min-w-max pb-4 pt-12">
+        <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">
+          <Plate editor={editor}>
+            <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
+              <Editor
+                variant="none"
+                placeholder="Take a note..."
+                className="max-h-screen min-h-80 p-4"
+              />
+            </EditorContainer>
+          </Plate>
         </div>
-      )}
-    </>
+
+        <DialogClose
+          type="button"
+          // onClick={handleSave}
+          className={cn(buttonVariants({ variant: 'default' }), 'ml-auto')}
+        >
+          Update
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
   )
 }

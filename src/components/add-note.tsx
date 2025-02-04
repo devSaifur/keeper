@@ -1,7 +1,7 @@
 import type { Note } from '@/local/db'
 import { saveToDB } from '@/local/sync'
 import { Plate } from '@udecode/plate/react'
-import { MaximizeIcon, PlusIcon } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -42,14 +42,6 @@ export const AddNote = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="min-w-max pb-4 pt-12">
-        <div
-          // onClick={() => setIsFullScreen((prev) => !prev)}
-          className="absolute right-12 top-4 cursor-pointer rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
-        >
-          <MaximizeIcon className="size-4" />
-          <span className="sr-only">Toggle Fullscreen</span>
-        </div>
-
         <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">
           <Plate editor={editor}>
             <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">

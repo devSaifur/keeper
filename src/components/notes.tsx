@@ -6,7 +6,7 @@ import { Note } from '@/components/note'
 export default function Notes() {
   const notes = useLiveQuery(() => db.notes.toArray())
 
-  if (!notes) {
+  if (!notes || notes.length === 0) {
     return null
   }
 

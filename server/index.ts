@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { serveStatic } from 'hono/bun'
 import { csrf } from 'hono/csrf'
 import { logger } from 'hono/logger'
 
@@ -6,22 +7,27 @@ import { authMiddleware } from './middleware'
 import { authRoutes } from './routes/auth-routes'
 import { notesRoutes } from './routes/notes-routes'
 
-const api = new Hono()
+const app = new Hono()
+
+const apiRoutes = app
   .basePath('/api')
   .route('/auth/**', authRoutes)
   .route('/notes', notesRoutes)
+  .get('/hello', (c) => c.json({ message: 'Hello' }))
 
-api.use(logger())
+app.use(logger())
 
-api.use(csrf())
+app.use(csrf())
 
-api.use(authMiddleware)
+app.use(authMiddleware)
 
-api.onError((err, c) => {
+app.use('*', serveStatic({ root: './dist' }))
+
+app.onError((err, c) => {
   console.dir(`Error: ${err.message}`, { colors: true })
   return c.json({ error: 'Something went wrong' }, 500)
 })
 
-export default api
+export default app
 
-export type ApiType = typeof api
+export type ApiType = typeof apiRoutes

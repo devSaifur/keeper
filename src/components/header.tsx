@@ -75,33 +75,35 @@ export const Header = () => {
           </div>
           <div className="flex items-center gap-x-4">
             <ThemeToggle />
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar>
-                  <AvatarFallback>
-                    {data?.user.name?.slice(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem className="justify-center">
-                  <Button
-                    disabled={isPending}
-                    variant="destructive"
-                    size="sm"
-                    className="dark:bg-red-700"
-                    onClick={handleLogout}
-                  >
-                    <LogOutIcon className="size-4" />
-                    {isPending ? (
-                      <Loader2 className="size-5 animate-spin" />
-                    ) : (
-                      'Logout'
-                    )}
-                  </Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {data?.user && (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarFallback>
+                      {data?.user.name?.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem className="justify-center">
+                    <Button
+                      disabled={isPending}
+                      variant="destructive"
+                      size="sm"
+                      className="dark:bg-red-700"
+                      onClick={handleLogout}
+                    >
+                      <LogOutIcon className="size-4" />
+                      {isPending ? (
+                        <Loader2 className="size-5 animate-spin" />
+                      ) : (
+                        'Logout'
+                      )}
+                    </Button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
       </div>

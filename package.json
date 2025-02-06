@@ -8,6 +8,7 @@
     "dev:client": "vite",
     "dev:server": "bun run --hot server/index.ts",
     "dev": "concurrently --kill-others \"bun run dev:client\" \"bun run dev:server\"",
+    "start": "bun run --hot server/index.ts",
     "db:push": "bun run drizzle-kit push",
     "db:studio": "bun run drizzle-kit studio",
     "build": "vite build",

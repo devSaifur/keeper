@@ -14,7 +14,7 @@ import {
 import { useCreateEditor } from '@/components/editor/use-create-editor'
 import { Editor, EditorContainer } from '@/components/plate-ui/editor'
 
-export const AddNote = () => {
+const AddNote = () => {
   const editor = useCreateEditor()
 
   async function handleSave() {
@@ -64,3 +64,5 @@ export const AddNote = () => {
     </Dialog>
   )
 }
+
+export default AddNote

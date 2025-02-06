@@ -1,6 +1,35 @@
+import db from '@/local/db'
+import { useRouter } from '@tanstack/react-router'
+import { Loader2, LogOutIcon } from 'lucide-react'
+
+import { signOut, useSession } from '@/lib/auth-client'
+
 import { ThemeToggle } from './theme-toggle'
+import { Avatar, AvatarFallback } from './ui/avatar'
+import { Button } from './ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from './ui/dropdown-menu'
 
 export const Header = () => {
+  const { data, isPending } = useSession()
+  const router = useRouter()
+
+  async function handleLogout() {
+    await db.notes.clear()
+    await db.deletedNotes.clear()
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.invalidate()
+        }
+      }
+    })
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-muted-foreground/50 bg-background py-1 shadow transition-colors md:py-2">
       <div className="mx-auto max-w-7xl px-4 py-2">
@@ -44,7 +73,36 @@ export const Header = () => {
               Keeper
             </h1>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-x-4">
+            <ThemeToggle />
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarFallback>
+                    {data?.user.name?.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem className="justify-center">
+                  <Button
+                    disabled={isPending}
+                    variant="destructive"
+                    size="sm"
+                    className="dark:bg-red-700"
+                    onClick={handleLogout}
+                  >
+                    <LogOutIcon className="size-4" />
+                    {isPending ? (
+                      <Loader2 className="size-5 animate-spin" />
+                    ) : (
+                      'Logout'
+                    )}
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </header>

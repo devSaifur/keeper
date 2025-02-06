@@ -11,6 +11,5 @@ export const Route = createFileRoute('/_authenticated')({
       })
     }
   },
-  component: Outlet,
-  pendingComponent: () => <div>Loading...</div>
+  component: Outlet
 })

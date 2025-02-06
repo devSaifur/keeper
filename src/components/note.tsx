@@ -41,14 +41,14 @@ export const Note = ({ note }: NoteProps) => {
           </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="min-w-max pb-4 pt-12">
-        <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">
+      <DialogContent className="max-w-[calc(100dvw-40px)] pb-4 pt-10 md:max-w-2xl md:pt-12">
+        <div className="flex flex-col gap-y-3">
           <Plate editor={editor}>
-            <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
+            <EditorContainer className="rounded-sm border border-accent">
               <Editor
                 variant="none"
                 placeholder="Take a note..."
-                className="max-h-screen min-h-80 p-4"
+                className="max-h-[calc(100dvh-200px)] min-h-80 p-4"
               />
             </EditorContainer>
           </Plate>

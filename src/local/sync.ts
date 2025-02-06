@@ -15,7 +15,8 @@ export async function deleteFromDB(id: string) {
 
 export async function editToDB(id: string, content: string) {
   await db.notes.where('id').equals(id).modify({
-    content
+    content,
+    syncStatus: 'update'
   })
 }
 

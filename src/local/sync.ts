@@ -13,9 +13,8 @@ export async function deleteFromDB(id: string) {
   await db.notes.delete(id)
 }
 
-export async function editToDB(id: string, title: string, content: string) {
+export async function editToDB(id: string, content: string) {
   await db.notes.where('id').equals(id).modify({
-    title,
     content
   })
 }
@@ -45,7 +44,6 @@ export async function getNotesFromServerAndSaveToDB() {
 
     const notesToSave = notes.map((note) => ({
       id: crypto.randomUUID(),
-      title: note.title,
       content: note.content,
       syncStatus: 'synced',
       serverId: note.id,

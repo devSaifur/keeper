@@ -66,7 +66,6 @@ export const notes = sqliteTable('note', {
   userId: text('user_id')
     .notNull()
     .references(() => users.id),
-  title: text('title').notNull(),
   content: text('content').notNull(),
   createdAt: text('created_at')
     .notNull()

@@ -14,11 +14,10 @@ export function PlateEditor() {
     if (!content) return
     const note = {
       id: crypto.randomUUID(),
-      title: '',
       content,
-      lastModified: Date.now(),
       syncStatus: 'pending',
-      serverId: ''
+      serverId: '',
+      createdAt: new Date().toISOString()
     } as Note
     await saveToDB(note)
   }

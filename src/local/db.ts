@@ -2,10 +2,15 @@ import Dexie from 'dexie'
 
 export interface Note {
   id: string
-  title: string
   content: string
-  syncStatus: 'pending' | 'synced' | 'error'
-  lastModified: number
+  syncStatus:
+    | 'pending'
+    | 'synced'
+    | 'update'
+    | 'addError'
+    | 'updateError'
+    | 'deleteError'
+  lastModified: string
   serverId?: string
   createdAt: string
 }
@@ -24,7 +29,7 @@ export interface Database extends Dexie {
 const db = new Dexie('Database') as Database
 
 db.version(3).stores({
-  notes: 'id, title, content, lastModified, serverId',
+  notes: 'id, content, lastModified, serverId',
   deletedNotes: 'id, deletedAt, syncStatus'
 })
 

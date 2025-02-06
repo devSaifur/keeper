@@ -7,7 +7,9 @@ const SYNC_INTERVAL = 10000
 async function addNotesSync() {
   const notes = await db.notes.toArray()
 
-  const notesToSync = notes.filter((note) => note.syncStatus === 'pending')
+  const notesToSync = notes.filter(
+    (note) => note.syncStatus === 'pending' || note.syncStatus === 'addError'
+  )
 
   if (notesToSync.length === 0) {
     return
@@ -16,18 +18,15 @@ async function addNotesSync() {
   // prepare notes to sync by only including necessary fields
   const pendingNotes = notesToSync.map((note) => ({
     id: note.id,
-    title: note.title,
     content: note.content
   }))
-
-  console.log(`Syncing ${pendingNotes.length} notes`)
 
   try {
     const res = await api.notes.$post({
       json: pendingNotes
     })
 
-    const { results } = await res.json()
+    const results = await res.json()
 
     if (results.length > 0) {
       // update local notes sync status and server id
@@ -40,12 +39,12 @@ async function addNotesSync() {
               .modify({
                 syncStatus: 'synced',
                 serverId: syncedNote.serverId as string,
-                lastModified: Date.now()
+                lastModified: new Date().toISOString()
               })
           } else {
             await db.notes.where('id').equals(syncedNote.noteId).modify({
-              syncStatus: 'error',
-              lastModified: Date.now()
+              syncStatus: 'addError',
+              lastModified: new Date().toISOString()
             })
           }
         })
@@ -62,8 +61,6 @@ async function deleteNotesSync() {
   if (notes.length === 0) {
     return
   }
-
-  console.log(`Syncing ${notes.length} deleted notes`)
 
   const pendingDeleteNotes = [
     ...notes
@@ -84,12 +81,64 @@ async function deleteNotesSync() {
   }
 }
 
+export async function updateNoteSync() {
+  const notes = await db.notes.toArray()
+
+  const notesToSync = notes.filter(
+    (note) => note.syncStatus === 'update' || note.syncStatus === 'updateError'
+  )
+
+  if (notesToSync.length === 0) {
+    return
+  }
+
+  // prepare notes to sync by only including necessary fields
+  const pendingNotes = notesToSync.map((note) => ({
+    id: note.serverId as string,
+    content: note.content
+  }))
+
+  try {
+    const res = await api.notes.$put({
+      json: pendingNotes
+    })
+
+    const results = await res.json()
+
+    if (results.length > 0) {
+      // update local notes sync status and server id
+      await Promise.all(
+        results.map(async (syncedNote) => {
+          if (syncedNote.success) {
+            await db.notes
+              .where('id')
+              .equals(syncedNote.noteId)
+              .modify({
+                syncStatus: 'synced',
+                serverId: syncedNote.noteId as string,
+                lastModified: new Date().toISOString()
+              })
+          } else {
+            await db.notes.where('id').equals(syncedNote.noteId).modify({
+              syncStatus: 'updateError',
+              lastModified: new Date().toISOString()
+            })
+          }
+        })
+      )
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 let syncIntervalId: Timer | undefined
 
 function startSync() {
   if (!syncIntervalId) {
     syncIntervalId = setInterval(addNotesSync, SYNC_INTERVAL)
     syncIntervalId = setInterval(deleteNotesSync, SYNC_INTERVAL)
+    syncIntervalId = setInterval(updateNoteSync, SYNC_INTERVAL)
   }
 }
 

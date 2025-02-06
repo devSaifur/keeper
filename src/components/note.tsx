@@ -1,3 +1,4 @@
+import { editToDB } from '@/local/sync'
 import { deserializeMd } from '@udecode/plate-markdown'
 import { Plate } from '@udecode/plate/react'
 
@@ -14,7 +15,6 @@ import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
 interface NoteProps {
   note: {
     id: string
-    title: string
     content: string
   }
 }
@@ -22,6 +22,12 @@ interface NoteProps {
 export const Note = ({ note }: NoteProps) => {
   const editor = useCreateEditor()
   editor.tf.setValue(deserializeMd(editor, note.content))
+
+  async function handleUpdate() {
+    const content = editor.api.markdown.serialize()
+    if (!content) return
+    await editToDB(note.id, content)
+  }
 
   return (
     <Dialog>
@@ -50,7 +56,7 @@ export const Note = ({ note }: NoteProps) => {
 
         <DialogClose
           type="button"
-          // onClick={handleSave}
+          onClick={handleUpdate}
           className={cn(buttonVariants({ variant: 'default' }), 'ml-auto')}
         >
           Update

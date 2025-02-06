@@ -22,7 +22,6 @@ export const AddNote = () => {
     if (!content) return
     const note = {
       id: crypto.randomUUID(),
-      title: '',
       content,
       createdAt: new Date().toISOString(),
       syncStatus: 'pending',

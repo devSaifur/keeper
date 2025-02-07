@@ -45,9 +45,9 @@ interface InlineComboboxContextValue {
   inputProps: UseComboboxInputResult['props']
   inputRef: RefObject<HTMLInputElement | null>
   removeInput: UseComboboxInputResult['removeInput']
-  setHasEmpty: (hasEmpty: boolean) => void
   showTrigger: boolean
   trigger: string
+  setHasEmpty: (hasEmpty: boolean) => void
 }
 
 const InlineComboboxContext = createContext<InlineComboboxContextValue>(
@@ -73,9 +73,9 @@ interface InlineComboboxProps {
   trigger: string
   filter?: FilterFn | false
   hideWhenNoValue?: boolean
-  setValue?: (value: string) => void
   showTrigger?: boolean
   value?: string
+  setValue?: (value: string) => void
 }
 
 const InlineCombobox = ({
@@ -268,7 +268,7 @@ const InlineComboboxContent: typeof ComboboxPopover = ({
     <Portal>
       <ComboboxPopover
         className={cn(
-          'z-[500] max-h-[288px] w-[300px] overflow-y-auto rounded-md bg-popover shadow-md',
+          'z-500 max-h-[288px] w-[300px] overflow-y-auto rounded-md bg-popover shadow-md',
           className
         )}
         {...props}
@@ -278,7 +278,7 @@ const InlineComboboxContent: typeof ComboboxPopover = ({
 }
 
 const comboboxItemVariants = cva(
-  'relative mx-1 flex h-[28px] select-none items-center rounded-sm px-2 text-sm text-foreground outline-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'relative mx-1 flex h-[28px] items-center rounded-sm px-2 text-sm text-foreground outline-none select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     defaultVariants: {
       interactive: true
@@ -369,12 +369,12 @@ const InlineComboboxRow = ComboboxRow
 
 const InlineComboboxGroup = withCn(
   ComboboxGroup,
-  'hidden py-1.5 [&:has([role=option])]:block [&:not(:last-child)]:border-b'
+  'hidden py-1.5 not-last:border-b [&:has([role=option])]:block'
 )
 
 const InlineComboboxGroupLabel = withCn(
   ComboboxGroupLabel,
-  'mb-2 mt-1.5 px-3 text-xs font-medium text-muted-foreground'
+  'mt-1.5 mb-2 px-3 text-xs font-medium text-muted-foreground'
 )
 
 export {

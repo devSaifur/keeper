@@ -55,7 +55,8 @@ export const notesRoutes = new Hono()
       z.array(
         z.object({
           id: z.string().uuid(),
-          content: z.string()
+          content: z.string(),
+          serverId: z.string().nanoid()
         })
       )
     ),
@@ -70,10 +71,10 @@ export const notesRoutes = new Hono()
             for (const note of notesToSync) {
               await updateNote(note, userId)
             }
-            return { noteId: note.id, success: true }
+            return { noteId: note.id, serverId: note.serverId, success: true }
           } catch (err) {
             console.error(`Error adding note: ${err}`)
-            return { noteId: note.id, success: false }
+            return { noteId: note.id, serverId: note.serverId, success: false }
           }
         })
       )
@@ -82,7 +83,7 @@ export const notesRoutes = new Hono()
   )
   .delete(
     '/',
-    zValidator('json', z.array(z.string().uuid())),
+    zValidator('json', z.array(z.string().nanoid())),
     getUser,
     async (c) => {
       const noteIds = c.req.valid('json')

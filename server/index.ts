@@ -1,5 +1,6 @@
+import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
 import { Hono } from 'hono'
-import { serveStatic } from 'hono/bun'
 import { csrf } from 'hono/csrf'
 import { logger } from 'hono/logger'
 
@@ -13,7 +14,6 @@ const apiRoutes = app
   .basePath('/api')
   .route('/auth/**', authRoutes)
   .route('/notes', notesRoutes)
-  .get('/hello', (c) => c.json({ message: 'Hello' }))
 
 app.use(logger())
 
@@ -28,6 +28,12 @@ app.onError((err, c) => {
   return c.json({ error: 'Something went wrong' }, 500)
 })
 
-export default app
+const port = 3000
+console.log(`Server is running on http://localhost:${port}`)
+
+serve({
+  fetch: app.fetch,
+  port
+})
 
 export type ApiType = typeof apiRoutes

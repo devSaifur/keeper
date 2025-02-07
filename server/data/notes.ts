@@ -31,7 +31,7 @@ export async function addNote(userId: string, newNote: { content: string }) {
 }
 
 export async function updateNote(
-  note: { id: string; content: string },
+  note: { id: string; content: string; serverId: string },
   userId: string
 ) {
   await db
@@ -39,5 +39,5 @@ export async function updateNote(
     .set({
       content: note.content
     })
-    .where(and(eq(notes.id, note.id), eq(notes.userId, userId)))
+    .where(and(eq(notes.id, note.serverId), eq(notes.userId, userId)))
 }

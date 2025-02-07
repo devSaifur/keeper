@@ -94,8 +94,9 @@ export async function updateNoteSync() {
 
   // prepare notes to sync by only including necessary fields
   const pendingNotes = notesToSync.map((note) => ({
-    id: note.serverId as string,
-    content: note.content
+    id: note.id,
+    content: note.content,
+    serverId: note.serverId as string
   }))
 
   try {
@@ -110,14 +111,11 @@ export async function updateNoteSync() {
       await Promise.all(
         results.map(async (syncedNote) => {
           if (syncedNote.success) {
-            await db.notes
-              .where('id')
-              .equals(syncedNote.noteId)
-              .modify({
-                syncStatus: 'synced',
-                serverId: syncedNote.noteId as string,
-                lastModified: new Date().toISOString()
-              })
+            await db.notes.where('id').equals(syncedNote.noteId).modify({
+              syncStatus: 'synced',
+              serverId: syncedNote.serverId,
+              lastModified: new Date().toISOString()
+            })
           } else {
             await db.notes.where('id').equals(syncedNote.noteId).modify({
               syncStatus: 'updateError',
@@ -132,7 +130,7 @@ export async function updateNoteSync() {
   }
 }
 
-let syncIntervalId: Timer | undefined
+let syncIntervalId: ReturnType<typeof setInterval> | undefined
 
 function startSync() {
   if (!syncIntervalId) {

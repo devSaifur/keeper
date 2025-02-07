@@ -1,6 +1,6 @@
 import { cn, withRef } from '@udecode/cn'
 import { Image, ImagePlugin, useMediaState } from '@udecode/plate-media/react'
-import { ResizableProvider, useResizableStore } from '@udecode/plate-resizable'
+import { ResizableProvider, useResizableValue } from '@udecode/plate-resizable'
 import { withHOC } from '@udecode/plate/react'
 
 import { Caption, CaptionTextarea } from './caption'
@@ -14,7 +14,7 @@ export const ImageElement = withHOC(
     ({ children, className, nodeProps, ...props }, ref) => {
       const { align = 'center', focused, readOnly, selected } = useMediaState()
 
-      const width = useResizableStore().get.width()
+      const width = useResizableValue('width')
 
       return (
         <MediaPopover plugin={ImagePlugin}>

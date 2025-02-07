@@ -102,7 +102,6 @@ import {
 } from '@/components/plate-ui/table-cell-element-static'
 import { TableElementStatic } from '@/components/plate-ui/table-element-static'
 import { TableRowElementStatic } from '@/components/plate-ui/table-row-element-static'
-import { TocElementStatic } from '@/components/plate-ui/toc-element-static'
 import { ToggleElementStatic } from '@/components/plate-ui/toggle-element-static'
 
 import {
@@ -218,7 +217,6 @@ export function ExportToolbarButton({ children, ...props }: DropdownMenuProps) {
       [BaseTableCellPlugin.key]: TableCellElementStatic,
       [BaseTablePlugin.key]: TableElementStatic,
       [BaseTableRowPlugin.key]: TableRowElementStatic,
-      [BaseTocPlugin.key]: TocElementStatic,
       [BaseTogglePlugin.key]: ToggleElementStatic,
       [BaseUnderlinePlugin.key]: withProps(SlateLeaf, { as: 'u' }),
       [BaseVideoPlugin.key]: MediaVideoElementStatic,

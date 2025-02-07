@@ -1,5 +1,10 @@
-import { drizzle } from 'drizzle-orm/bun-sqlite'
+import { drizzle } from 'drizzle-orm/libsql'
 
 import * as schema from './schema'
 
-export const db = drizzle('database.sqlite', { schema })
+export const db = drizzle({
+  connection: {
+    url: 'file:./database.sqlite'
+  },
+  schema
+})

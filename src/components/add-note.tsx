@@ -4,7 +4,7 @@ import { Plate } from '@udecode/plate/react'
 import { PlusIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -32,13 +32,14 @@ const AddNote = () => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          asChild
-          className="fixed bottom-14 right-14 z-50 size-16 cursor-pointer rounded-full shadow-2xl md:bottom-20 md:right-16"
-        >
-          <PlusIcon className="size-14 text-background" />
-        </Button>
+      <DialogTrigger
+        asChild
+        className={cn(
+          buttonVariants({ variant: 'default' }),
+          'fixed bottom-14 right-14 z-50 size-16 cursor-pointer rounded-full shadow-2xl md:bottom-20 md:right-16'
+        )}
+      >
+        <PlusIcon className="size-14 text-background" />
       </DialogTrigger>
       <DialogContent className="min-w-max pb-4 pt-12">
         <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">

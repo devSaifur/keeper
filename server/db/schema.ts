@@ -1,5 +1,6 @@
 import { InferSelectModel, relations, sql } from 'drizzle-orm'
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { nanoid } from 'nanoid'
 
 export const users = sqliteTable('user', {
   id: text('id').primaryKey(),
@@ -62,7 +63,7 @@ export const userRelations = relations(users, ({ many }) => ({
 export const notes = sqliteTable('note', {
   id: text('id')
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(() => nanoid()),
   userId: text('user_id')
     .notNull()
     .references(() => users.id),

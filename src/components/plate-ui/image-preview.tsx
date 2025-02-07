@@ -1,11 +1,11 @@
-import { cn, createPrimitiveComponent } from '@udecode/cn'
+import { cn } from '@udecode/cn'
 import {
   PreviewImage,
   useImagePreview,
-  useImagePreviewState,
-  useScaleInput,
-  useScaleInputState
+  useImagePreviewValue,
+  useScaleInput
 } from '@udecode/plate-media/react'
+import { useEditorRef } from '@udecode/plate/react'
 import { cva } from 'class-variance-authority'
 import { ArrowLeft, ArrowRight, Download, Minus, Plus, X } from 'lucide-react'
 
@@ -21,16 +21,13 @@ const toolButtonVariants = cva('rounded bg-[rgba(0,0,0,0.5)] px-1', {
   }
 })
 
-const ScaleInput = createPrimitiveComponent('input')({
-  propsHook: useScaleInput,
-  stateHook: useScaleInputState
-})
-
 const SCROLL_SPEED = 4
 
 export const ImagePreview = () => {
-  const state = useImagePreviewState({ scrollSpeed: SCROLL_SPEED })
-
+  const editor = useEditorRef()
+  const isOpen = useImagePreviewValue('isOpen', editor.id)
+  const scale = useImagePreviewValue('scale')
+  const isEditingScale = useImagePreviewValue('isEditingScale')
   const {
     closeProps,
     currentUrlIndex,
@@ -44,9 +41,7 @@ export const ImagePreview = () => {
     zoomInDisabled,
     zoomInProps,
     zoomOutDisabled
-  } = useImagePreview(state)
-
-  const { isOpen, scale } = state
+  } = useImagePreview({ scrollSpeed: SCROLL_SPEED })
 
   return (
     <div
@@ -107,7 +102,7 @@ export const ImagePreview = () => {
                 <Minus className="size-4" />
               </button>
               <div className="mx-px">
-                {state.isEditingScale ? (
+                {isEditingScale ? (
                   <>
                     <ScaleInput className="w-10 rounded px-1 text-slate-500 outline" />{' '}
                     <span>%</span>
@@ -144,4 +139,10 @@ export const ImagePreview = () => {
       </div>
     </div>
   )
+}
+
+export function ScaleInput(props: React.ComponentProps<'input'>) {
+  const { props: scaleInputProps, ref } = useScaleInput()
+
+  return <input {...scaleInputProps} {...props} ref={ref} />
 }

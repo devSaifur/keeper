@@ -12,9 +12,11 @@ export const ColorInput = withRef<'input'>(
         {React.Children.map(children, (child) => {
           if (!child) return child
 
-          return React.cloneElement(child as React.ReactElement, childProps)
+          return React.cloneElement(
+            child as React.ReactElement<any>,
+            childProps
+          )
         })}
-
         <input
           ref={useComposedRef(ref, inputRef)}
           className={cn('size-0 overflow-hidden border-0 p-0', className)}

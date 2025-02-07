@@ -59,7 +59,7 @@ export const MediaPlaceholderElement = withHOC(
 
       const { api } = useEditorPlugin(PlaceholderPlugin)
 
-      const { isUploading, progress, uploadFile, uploadedFile, uploadingFile } =
+      const { isUploading, progress, uploadedFile, uploadFile, uploadingFile } =
         useUploadFile()
 
       const loading = isUploading && uploadingFile
@@ -79,7 +79,10 @@ export const MediaPlaceholderElement = withHOC(
 
           replaceCurrentPlaceholder(firstFile)
 
-          restFiles.length > 0 && (editor as any).tf.insert.media(restFiles)
+          if (restFiles.length > 0) {
+            // @ts-expect-error bug
+            editor.tf.insert.media(restFiles)
+          }
         }
       })
 
@@ -193,7 +196,7 @@ export function ImageProgress({
 }: {
   file: File
   className?: string
-  imageRef?: React.RefObject<HTMLImageElement>
+  imageRef?: React.RefObject<HTMLImageElement | null>
   progress?: number
 }) {
   const [objectUrl, setObjectUrl] = useState<string | null>(null)

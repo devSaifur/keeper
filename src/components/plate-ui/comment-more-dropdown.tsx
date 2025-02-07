@@ -1,9 +1,7 @@
 import { cn } from '@udecode/cn'
 import {
   useCommentDeleteButton,
-  useCommentDeleteButtonState,
-  useCommentEditButton,
-  useCommentEditButtonState
+  useCommentEditButton
 } from '@udecode/plate-comments/react'
 import { MoreHorizontal } from 'lucide-react'
 
@@ -17,10 +15,8 @@ import {
 } from './dropdown-menu'
 
 export function CommentMoreDropdown() {
-  const editButtonState = useCommentEditButtonState()
-  const { props: editProps } = useCommentEditButton(editButtonState)
-  const deleteButtonState = useCommentDeleteButtonState()
-  const { props: deleteProps } = useCommentDeleteButton(deleteButtonState)
+  const { props: editProps } = useCommentEditButton()
+  const { props: deleteProps } = useCommentDeleteButton()
 
   return (
     <DropdownMenu modal={false}>

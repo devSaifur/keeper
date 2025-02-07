@@ -45,7 +45,6 @@
   "dependencies": {
     "@ariakit/react": "^0.4.15",
     "@fontsource/geist-sans": "^5.1.0",
-    "@hono/node-server": "^1.13.8",
     "@hono/zod-validator": "^0.4.2",
     "@hookform/resolvers": "^3.10.0",
     "@libsql/client": "^0.14.0",

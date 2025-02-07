@@ -37,7 +37,7 @@ export const notesRoutes = new Hono()
       const results = await Promise.all(
         notesToSync.map(async (note) => {
           try {
-            const addedNote = await addNote(userId, note)
+            const addedNote = await addNote(userId, { content: note.content })
             return { noteId: note.id, success: true, serverId: addedNote.id }
           } catch (err) {
             console.error(`Error adding note: ${err}`)
@@ -69,7 +69,10 @@ export const notesRoutes = new Hono()
         notesToSync.map(async (note) => {
           try {
             for (const note of notesToSync) {
-              await updateNote(note, userId)
+              await updateNote(
+                { content: note.content, serverId: note.serverId },
+                userId
+              )
             }
             return { noteId: note.id, serverId: note.serverId, success: true }
           } catch (err) {

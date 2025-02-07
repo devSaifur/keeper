@@ -31,7 +31,7 @@ export async function addNote(userId: string, newNote: { content: string }) {
 }
 
 export async function updateNote(
-  note: { id: string; content: string; serverId: string },
+  note: { content: string; serverId: string },
   userId: string
 ) {
   await db

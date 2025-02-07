@@ -8,6 +8,6 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["api/**/*"],
+  "include": ["server/**/*"],
   "exclude": ["node_modules"]
 }

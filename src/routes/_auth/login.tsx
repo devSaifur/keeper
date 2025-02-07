@@ -1,9 +1,9 @@
 import { getNotesFromServerAndSaveToDB } from '@/local/sync'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-import { signInSchema, TSignInSchema } from 'api/lib/validators'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { signInSchema, TSignInSchema } from 'server/lib/validators'
 import { toast } from 'sonner'
 
 import { signIn } from '@/lib/auth-client'

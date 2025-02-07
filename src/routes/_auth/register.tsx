@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signUpSchema, TSignUpSchema } from '@server/lib/validators'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { signUpSchema, TSignUpSchema } from 'api/lib/validators'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'

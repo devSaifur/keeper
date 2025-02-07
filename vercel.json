@@ -3,7 +3,7 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "functions": {
-    "server/dist/index.js": {
+    "api/index.js": {
       "memory": 1024,
       "maxDuration": 10
     }
@@ -11,7 +11,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server/dist/index.js"
+      "destination": "/api/index.js"
     },
     {
       "source": "/(.*)",

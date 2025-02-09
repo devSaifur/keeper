@@ -1,3 +1,6 @@
+'use client'
+
+import React from 'react'
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu'
 import { useEditorRef, usePlateState } from '@udecode/plate/react'
 import { Eye, Pen } from 'lucide-react'

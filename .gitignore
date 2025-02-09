@@ -39,9 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.vscode
-database.sqlite
-count.txt
-.output
-.vinxi
-dist

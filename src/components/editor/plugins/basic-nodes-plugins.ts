@@ -1,3 +1,5 @@
+'use client'
+
 import { BasicMarksPlugin } from '@udecode/plate-basic-marks/react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'

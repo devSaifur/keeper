@@ -1,0 +1,33 @@
+{
+  "cSpell.words": [
+    "cmdk",
+    "commonmark",
+    "dexie",
+    "Excalidraw",
+    "Fira",
+    "hyperscript",
+    "ianvs",
+    "libsql",
+    "lowlight",
+    "mdxeditor",
+    "Menlo",
+    "milkdown",
+    "nord",
+    "Noto",
+    "remeda",
+    "rgba",
+    "rocicorp",
+    "rsbuild",
+    "rspack",
+    "Sonner",
+    "tiptap",
+    "tseslint",
+    "turbopack",
+    "TURSO",
+    "unenv",
+    "uploadthing",
+    "usehooks",
+    "vinxi"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

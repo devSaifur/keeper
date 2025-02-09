@@ -1,16 +1,24 @@
+'use client'
+
 import { editToDB } from '@/local/sync'
 import { deserializeMd } from '@udecode/plate-markdown'
 import { Plate } from '@udecode/plate/react'
 
 import { cn } from '@/lib/utils'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { useCreateEditor } from '@/components/editor/use-create-editor'
 import { Editor, EditorContainer } from '@/components/plate-ui/editor'
 
 import { ConfirmDelete } from './confirm-delete'
 import Markdown from './markdown'
 import { buttonVariants } from './ui/button'
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
 
 interface NoteProps {
   note: {
@@ -24,9 +32,9 @@ export const Note = ({ note }: NoteProps) => {
   editor.tf.setValue(deserializeMd(editor, note.content))
 
   async function handleUpdate() {
-    const content = editor.api.markdown.serialize()
-    if (!content) return
-    await editToDB(note.id, content)
+    const value = editor.api.markdown.serialize()
+    if (!value) return
+    await editToDB(note.id, value)
   }
 
   return (
@@ -41,14 +49,15 @@ export const Note = ({ note }: NoteProps) => {
           </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="max-w-[calc(100dvw-40px)] pb-4 pt-10 md:max-w-2xl md:pt-12">
-        <div className="flex flex-col gap-y-3">
+      <DialogContent className="min-w-max pb-4 pt-12">
+        <DialogTitle className="sr-only">Update Note</DialogTitle>
+        <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">
           <Plate editor={editor}>
-            <EditorContainer className="rounded-sm border border-accent">
+            <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
               <Editor
                 variant="none"
-                placeholder="Take a note..."
-                className="max-h-[calc(100dvh-200px)] min-h-80 p-4"
+                className="max-h-screen min-h-80 p-4"
+                autoFocus
               />
             </EditorContainer>
           </Plate>

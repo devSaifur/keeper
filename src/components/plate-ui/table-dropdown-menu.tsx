@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu'
 import { cn } from '@udecode/cn'
 import { TablePlugin, useTableMergeState } from '@udecode/plate-table/react'
@@ -220,7 +222,7 @@ export function TablePicker() {
 
   return (
     <div
-      className="m-0 !flex flex-col p-0"
+      className="flex! m-0 flex-col p-0"
       onClick={() => {
         tf.insert.table(tablePicker.size, { select: true })
         editor.tf.focus()

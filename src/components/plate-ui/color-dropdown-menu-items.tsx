@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import type { DropdownMenuItemProps } from '@radix-ui/react-dropdown-menu'
 import { cn } from '@udecode/cn'
@@ -21,8 +23,8 @@ export type TColor = {
 type ColorDropdownMenuItemProps = {
   isBrightColor: boolean
   isSelected: boolean
-  updateColor: (color: string) => void
   value: string
+  updateColor: (color: string) => void
   name?: string
 } & DropdownMenuItemProps
 
@@ -44,7 +46,7 @@ export function ColorDropdownMenuItem({
           variant: 'outline'
         }),
         'my-1 flex size-6 items-center justify-center rounded-full border border-solid border-muted p-0 transition-all hover:scale-125',
-        !isBrightColor && 'border-transparent text-white hover:!text-white',
+        !isBrightColor && 'hover:text-white! border-transparent text-white',
         className
       )}
       style={{ backgroundColor: value }}
@@ -54,7 +56,7 @@ export function ColorDropdownMenuItem({
       }}
       {...props}
     >
-      {isSelected ? <Check className="!size-3" /> : null}
+      {isSelected ? <Check className="size-3!" /> : null}
     </DropdownMenuItem>
   )
 

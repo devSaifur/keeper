@@ -1,3 +1,5 @@
+'use client'
+
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
 import { HEADING_LEVELS } from '@udecode/plate-heading'

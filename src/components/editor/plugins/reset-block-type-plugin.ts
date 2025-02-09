@@ -1,3 +1,5 @@
+'use client'
+
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CalloutPlugin } from '@udecode/plate-callout/react'
 import {

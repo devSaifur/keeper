@@ -12,8 +12,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from './ui/alert-dialog'
-import { Button } from './ui/button'
+} from '@/components/ui/alert-dialog'
+import { buttonVariants } from '@/components/ui/button'
 
 interface ConfirmDeleteProps {
   noteId: string
@@ -34,10 +34,11 @@ export const ConfirmDelete = ({ noteId }: ConfirmDeleteProps) => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger onClick={handlePropagation}>
-        <Button size="icon" variant="ghost">
-          <TrashIcon className="text-red-700" strokeWidth={3} />
-        </Button>
+      <AlertDialogTrigger
+        onClick={handlePropagation}
+        className={buttonVariants({ variant: 'ghost', size: 'icon' })}
+      >
+        <TrashIcon className="text-red-700" strokeWidth={3} />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -1,4 +1,6 @@
-import { useRef, useState } from 'react'
+'use client'
+
+import React, { useRef, useState } from 'react'
 import { cn, withRef } from '@udecode/cn'
 import type { TEquationElement } from '@udecode/plate-math'
 import { useEquationElement } from '@udecode/plate-math/react'

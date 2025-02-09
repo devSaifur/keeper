@@ -1,3 +1,6 @@
+'use client'
+
+import React from 'react'
 import { cn, withRef } from '@udecode/cn'
 import type { TLinkElement } from '@udecode/plate-link'
 import { useLink } from '@udecode/plate-link/react'
@@ -17,7 +20,7 @@ export const LinkElement = withRef<typeof PlateElement>(
           className,
           'font-medium text-primary underline decoration-primary underline-offset-4'
         )}
-        {...(linkProps as unknown as Record<string, unknown>)}
+        {...(linkProps as any)}
         {...props}
       >
         {children}

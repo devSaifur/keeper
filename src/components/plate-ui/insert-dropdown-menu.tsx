@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
@@ -43,7 +45,7 @@ import {
 import {
   insertBlock,
   insertInlineElement
-} from '@/components/editor/transforms'
+} from '@/components/editor/transformers'
 
 import {
   DropdownMenu,
@@ -62,8 +64,8 @@ type Group = {
 
 interface Item {
   icon: React.ReactNode
-  onSelect: (editor: PlateEditor, value: string) => void
   value: string
+  onSelect: (editor: PlateEditor, value: string) => void
   focusEditor?: boolean
   label?: string
 }

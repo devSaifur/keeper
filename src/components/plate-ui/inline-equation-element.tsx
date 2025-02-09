@@ -1,8 +1,14 @@
+'use client'
+
 import { useRef, useState } from 'react'
 import { cn, withRef } from '@udecode/cn'
 import type { TEquationElement } from '@udecode/plate-math'
 import { useEquationElement } from '@udecode/plate-math/react'
-import { useElement, useSelected } from '@udecode/plate/react'
+import {
+  useEditorSelector,
+  useElement,
+  useSelected
+} from '@udecode/plate/react'
 import { RadicalIcon } from 'lucide-react'
 
 import { EquationPopoverContent } from './equation-popover'
@@ -14,7 +20,11 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
     const element = useElement<TEquationElement>()
     const katexRef = useRef<HTMLDivElement | null>(null)
     const selected = useSelected()
-    const [open, setOpen] = useState(selected)
+    const isCollapsed = useEditorSelector(
+      (editor) => editor.api.isCollapsed(),
+      []
+    )
+    const [open, setOpen] = useState(selected && isCollapsed)
 
     useEquationElement({
       element,
@@ -45,7 +55,7 @@ export const InlineEquationElement = withRef<typeof PlateElement>(
           <PopoverTrigger asChild>
             <div
               className={cn(
-                'after:absolute after:inset-0 after:-left-1 after:-top-0.5 after:z-[1] after:h-[calc(100%)+4px] after:w-[calc(100%+8px)] after:rounded-sm after:content-[""]',
+                'after:z-1 after:absolute after:inset-0 after:-left-1 after:-top-0.5 after:h-[calc(100%)+4px] after:w-[calc(100%+8px)] after:rounded-sm after:content-[""]',
                 'h-6',
                 element.texExpression.length > 0 && open && 'after:bg-brand/15',
                 element.texExpression.length === 0 &&

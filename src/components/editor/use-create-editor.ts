@@ -14,7 +14,6 @@ import {
   CodeLinePlugin,
   CodeSyntaxPlugin
 } from '@udecode/plate-code-block/react'
-import { CommentsPlugin } from '@udecode/plate-comments/react'
 import { DatePlugin } from '@udecode/plate-date/react'
 import { EmojiInputPlugin } from '@udecode/plate-emoji/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
@@ -57,7 +56,6 @@ import { CodeLineElement } from '@/components/plate-ui/code-line-element'
 import { CodeSyntaxLeaf } from '@/components/plate-ui/code-syntax-leaf'
 import { ColumnElement } from '@/components/plate-ui/column-element'
 import { ColumnGroupElement } from '@/components/plate-ui/column-group-element'
-import { CommentLeaf } from '@/components/plate-ui/comment-leaf'
 import { DateElement } from '@/components/plate-ui/date-element'
 import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element'
 import { EquationElement } from '@/components/plate-ui/equation-element'
@@ -84,14 +82,7 @@ import { TableRowElement } from '@/components/plate-ui/table-row-element'
 import { TocElement } from '@/components/plate-ui/toc-element'
 import { ToggleElement } from '@/components/plate-ui/toggle-element'
 
-interface UseCreateEditorProps {
-  value?: string
-  showFixedToolbar?: boolean
-}
-
-export const useCreateEditor = ({
-  showFixedToolbar
-}: UseCreateEditorProps = {}) => {
+export const useCreateEditor = () => {
   return usePlateEditor({
     override: {
       components: {
@@ -104,11 +95,9 @@ export const useCreateEditor = ({
         [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
         [ColumnItemPlugin.key]: ColumnElement,
         [ColumnPlugin.key]: ColumnGroupElement,
-        [CommentsPlugin.key]: CommentLeaf,
         [DatePlugin.key]: DateElement,
         [EmojiInputPlugin.key]: EmojiInputElement,
         [EquationPlugin.key]: EquationElement,
-
         [FilePlugin.key]: MediaFileElement,
         [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
         [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
@@ -140,10 +129,6 @@ export const useCreateEditor = ({
         [VideoPlugin.key]: MediaVideoElement
       }
     },
-    plugins: [
-      ...editorPlugins,
-      FloatingToolbarPlugin,
-      ...(showFixedToolbar ? [FixedToolbarPlugin] : [])
-    ]
+    plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin]
   })
 }

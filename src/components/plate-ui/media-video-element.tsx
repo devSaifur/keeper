@@ -1,3 +1,6 @@
+'use client'
+
+import React from 'react'
 import { cn, withRef } from '@udecode/cn'
 import { parseTwitterUrl, parseVideoUrl } from '@udecode/plate-media'
 import { useMediaState } from '@udecode/plate-media/react'
@@ -6,7 +9,6 @@ import { useEditorMounted, withHOC } from '@udecode/plate/react'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import ReactPlayer from 'react-player'
 
-import { Caption, CaptionTextarea } from './caption'
 import { PlateElement } from './plate-element'
 import { mediaResizeHandleVariants, Resizable, ResizeHandle } from './resizable'
 
@@ -95,13 +97,6 @@ export const MediaVideoElement = withHOC(
                 )}
               </div>
             </Resizable>
-
-            <Caption style={{ width }} align={align}>
-              <CaptionTextarea
-                readOnly={readOnly}
-                placeholder="Write a caption..."
-              />
-            </Caption>
           </figure>
           {children}
         </PlateElement>

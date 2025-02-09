@@ -1,3 +1,5 @@
+'use client'
+
 import type { Note } from '@/local/db'
 import { saveToDB } from '@/local/sync'
 import { Plate } from '@udecode/plate/react'
@@ -9,6 +11,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
 import { useCreateEditor } from '@/components/editor/use-create-editor'
@@ -18,11 +21,10 @@ const AddNote = () => {
   const editor = useCreateEditor()
 
   async function handleSave() {
-    const content = editor.api.markdown.serialize()
-    if (!content) return
+    const value = editor.api.markdown.serialize()
     const note = {
       id: crypto.randomUUID(),
-      content,
+      content: value,
       createdAt: new Date().toISOString(),
       syncStatus: 'pending',
       serverId: ''
@@ -42,6 +44,7 @@ const AddNote = () => {
         <PlusIcon className="size-14 text-background" />
       </DialogTrigger>
       <DialogContent className="min-w-max pb-4 pt-12">
+        <DialogTitle className="sr-only">Add Note</DialogTitle>
         <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">
           <Plate editor={editor}>
             <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
@@ -49,6 +52,7 @@ const AddNote = () => {
                 variant="none"
                 placeholder="Take a note..."
                 className="max-h-screen min-h-80 p-4"
+                autoFocus
               />
             </EditorContainer>
           </Plate>

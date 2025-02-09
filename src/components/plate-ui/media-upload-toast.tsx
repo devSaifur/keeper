@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react'
 import { PlaceholderPlugin, UploadErrorCode } from '@udecode/plate-media/react'
 import { usePluginOption } from '@udecode/plate/react'

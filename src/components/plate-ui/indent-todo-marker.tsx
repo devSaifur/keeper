@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@udecode/cn'
 import type { SlateRenderElementProps } from '@udecode/plate'
 import {
@@ -32,12 +34,13 @@ export const TodoLi = (props: SlateRenderElementProps) => {
   const { children, element } = props
 
   return (
-    <span
+    <li
       className={cn(
+        'list-none',
         (element.checked as boolean) && 'text-muted-foreground line-through'
       )}
     >
       {children}
-    </span>
+    </li>
   )
 }

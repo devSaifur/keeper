@@ -1,4 +1,5 @@
-import { CaptionPlugin } from '@udecode/plate-caption/react'
+'use client'
+
 import {
   AudioPlugin,
   FilePlugin,
@@ -20,17 +21,6 @@ export const mediaPlugins = [
   VideoPlugin,
   AudioPlugin,
   FilePlugin,
-  CaptionPlugin.configure({
-    options: {
-      plugins: [
-        ImagePlugin,
-        VideoPlugin,
-        AudioPlugin,
-        FilePlugin,
-        MediaEmbedPlugin
-      ]
-    }
-  }),
   PlaceholderPlugin.configure({
     options: { disableEmptyPlaceholder: true },
     render: { afterEditable: MediaUploadToast }

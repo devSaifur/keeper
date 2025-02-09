@@ -1,12 +1,16 @@
+'use client'
+
 import { memo, useCallback } from 'react'
 import { cn } from '@udecode/cn'
-import {
-  EmojiCategoryList,
-  EmojiSettings,
-  type Emoji,
-  type GridRow
-} from '@udecode/plate-emoji'
+import { EmojiSettings, type Emoji, type GridRow } from '@udecode/plate-emoji'
 import type { UseEmojiPickerType } from '@udecode/plate-emoji/react'
+
+export type EmojiButtonProps = {
+  emoji: Emoji
+  index: number
+  onMouseOver: (emoji?: Emoji) => void
+  onSelect: (emoji: Emoji) => void
+}
 
 export type EmojiPickerContentProps = Pick<
   UseEmojiPickerType,
@@ -20,13 +24,6 @@ export type EmojiPickerContentProps = Pick<
   | 'settings'
   | 'visibleCategories'
 >
-
-export type EmojiButtonProps = {
-  emoji: Emoji
-  index: number
-  onMouseOver: (emoji?: Emoji) => void
-  onSelect: (emoji: Emoji) => void
-}
 
 export type RowOfButtonsProps = {
   row: GridRow
@@ -96,9 +93,9 @@ export function EmojiPickerContent({
   const getRowWidth = settings.perLine.value * settings.buttonSize.value
 
   const isCategoryVisible = useCallback(
-    (categoryId: string) => {
-      return visibleCategories.has(categoryId as EmojiCategoryList)
-        ? visibleCategories.get(categoryId as EmojiCategoryList)
+    (categoryId: any) => {
+      return visibleCategories.has(categoryId)
+        ? visibleCategories.get(categoryId)
         : false
     },
     [visibleCategories]
@@ -119,7 +116,7 @@ export function EmojiPickerContent({
             style={{ width: getRowWidth }}
             data-id={categoryId}
           >
-            <div className="sticky -top-px z-[1] bg-popover/90 p-1 py-2 text-sm font-semibold backdrop-blur-sm">
+            <div className="z-1 backdrop-blur-xs sticky -top-px bg-popover/90 p-1 py-2 text-sm font-semibold">
               {i18n.categories[categoryId]}
             </div>
             <div
@@ -155,7 +152,7 @@ export function EmojiPickerContent({
   const SearchList = useCallback(() => {
     return (
       <div style={{ width: getRowWidth }} data-id="search">
-        <div className="sticky -top-px z-[1] bg-popover/90 p-1 py-2 text-sm font-semibold text-card-foreground backdrop-blur-sm">
+        <div className="z-1 backdrop-blur-xs sticky -top-px bg-popover/90 p-1 py-2 text-sm font-semibold text-card-foreground">
           {i18n.searchResult}
         </div>
         <div className="relative flex flex-wrap">

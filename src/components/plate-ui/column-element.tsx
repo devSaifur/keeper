@@ -1,8 +1,11 @@
-import * as React from 'react'
+'use client'
+
+import React from 'react'
 import { cn, useComposedRef, withRef } from '@udecode/cn'
 import type { TColumnElement } from '@udecode/plate-layout'
 import { ResizableProvider } from '@udecode/plate-resizable'
-import { useReadOnly, withHOC } from '@udecode/plate/react'
+import { BlockSelectionPlugin } from '@udecode/plate-selection/react'
+import { usePluginOption, useReadOnly, withHOC } from '@udecode/plate/react'
 import { GripHorizontal } from 'lucide-react'
 
 import { Button } from './button'
@@ -18,20 +21,26 @@ import {
 export const ColumnElement = withHOC(
   ResizableProvider,
   withRef<typeof PlateElement>(({ children, className, ...props }, ref) => {
-    const readOnly = useReadOnly()
     const { width } = props.element as TColumnElement
+    const readOnly = useReadOnly()
+    const isSelectionAreaVisible = usePluginOption(
+      BlockSelectionPlugin,
+      'isSelectionAreaVisible'
+    )
 
     return (
       <div className="group/column relative" style={{ width: width ?? '100%' }}>
-        <div
-          className={cn(
-            'absolute left-1/2 top-2 z-50 -translate-x-1/2 -translate-y-1/2',
-            'pointer-events-auto flex items-center',
-            'opacity-0 transition-opacity group-hover/column:opacity-100'
-          )}
-        >
-          <ColumnDragHandle />
-        </div>
+        {!readOnly && !isSelectionAreaVisible && (
+          <div
+            className={cn(
+              'absolute left-1/2 top-2 z-50 -translate-x-1/2 -translate-y-1/2',
+              'pointer-events-auto flex items-center',
+              'opacity-0 transition-opacity group-hover/column:opacity-100'
+            )}
+          >
+            <ColumnDragHandle />
+          </div>
+        )}
 
         <PlateElement
           ref={useComposedRef(ref)}
@@ -48,7 +57,8 @@ export const ColumnElement = withHOC(
             )}
           >
             {children}
-            <DropLine />
+
+            {!readOnly && !isSelectionAreaVisible && <DropLine />}
           </div>
         </PlateElement>
       </div>
@@ -78,21 +88,16 @@ const ColumnDragHandle = React.memo(() => {
     </TooltipProvider>
   )
 })
+ColumnDragHandle.displayName = 'ColumnDragHandle'
 
-const DropLine = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+const DropLine = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
-      ref={ref}
       {...props}
-      className={cn(
-        'slate-dropLine',
-        'absolute bg-brand/50',
-
-        className
-      )}
+      className={cn('slate-dropLine', 'absolute bg-brand/50', className)}
     />
   )
-})
+}

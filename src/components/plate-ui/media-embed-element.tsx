@@ -1,12 +1,14 @@
+'use client'
+
+import React from 'react'
 import { cn, withRef } from '@udecode/cn'
 import { parseTwitterUrl, parseVideoUrl } from '@udecode/plate-media'
 import { MediaEmbedPlugin, useMediaState } from '@udecode/plate-media/react'
-import { ResizableProvider, useResizableValue } from '@udecode/plate-resizable'
+import { ResizableProvider } from '@udecode/plate-resizable'
 import { withHOC } from '@udecode/plate/react'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import { Tweet } from 'react-tweet'
 
-import { Caption, CaptionTextarea } from './caption'
 import { MediaPopover } from './media-popover'
 import { PlateElement } from './plate-element'
 import { mediaResizeHandleVariants, Resizable, ResizeHandle } from './resizable'
@@ -26,7 +28,6 @@ export const MediaEmbedElement = withHOC(
     } = useMediaState({
       urlParsers: [parseTwitterUrl, parseVideoUrl]
     })
-    const width = useResizableValue('width')
     const provider = embed?.provider
 
     return (
@@ -113,10 +114,6 @@ export const MediaEmbedElement = withHOC(
                 options={{ direction: 'right' }}
               />
             </Resizable>
-
-            <Caption style={{ width }} align={align}>
-              <CaptionTextarea placeholder="Write a caption..." />
-            </Caption>
           </figure>
 
           {children}

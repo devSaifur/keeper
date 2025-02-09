@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import { cn } from '@udecode/cn'
 import type { TPlaceholderElement } from '@udecode/plate-media'
 import {
@@ -80,8 +83,7 @@ export const MediaPlaceholderElement = withHOC(
           replaceCurrentPlaceholder(firstFile)
 
           if (restFiles.length > 0) {
-            // @ts-expect-error bug
-            editor.tf.insert.media(restFiles)
+            ;(editor as any).tf.insert.media(restFiles)
           }
         }
       })
@@ -216,7 +218,7 @@ export function ImageProgress({
 
   return (
     <div className={cn('relative', className)} contentEditable={false}>
-      <img
+      <Image
         ref={imageRef}
         className="h-auto w-full rounded-sm object-cover"
         alt={file.name}

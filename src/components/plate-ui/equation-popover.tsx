@@ -1,4 +1,6 @@
-import { useEffect } from 'react'
+'use client'
+
+import React, { useEffect } from 'react'
 import { cn } from '@udecode/cn'
 import type { TEquationElement } from '@udecode/plate-math'
 import { useEquationInput } from '@udecode/plate-math/react'
@@ -7,8 +9,7 @@ import {
   createPrimitiveComponent,
   useEditorRef,
   useElement,
-  useReadOnly,
-  useSelected
+  useReadOnly
 } from '@udecode/plate/react'
 import { CornerDownLeftIcon } from 'lucide-react'
 import TextareaAutosize, {
@@ -36,13 +37,12 @@ const EquationPopoverContent = ({
   const editor = useEditorRef()
   const readOnly = useReadOnly()
   const element = useElement<TEquationElement>()
-  const selected = useSelected()
 
   useEffect(() => {
-    if (isInline && selected) {
+    if (isInline && open) {
       setOpen(true)
     }
-  }, [selected, isInline, setOpen])
+  }, [isInline, open, setOpen])
 
   if (readOnly) return null
 
@@ -54,7 +54,7 @@ const EquationPopoverContent = ({
     } else {
       editor
         .getApi(BlockSelectionPlugin)
-        .blockSelection.addSelectedRow(element.id as string)
+        .blockSelection.set(element.id as string)
     }
   }
 

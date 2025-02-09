@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect } from 'react'
 import type { WithRequiredKey } from '@udecode/plate'
 import {
@@ -15,7 +17,6 @@ import {
 import { Link, Trash2Icon } from 'lucide-react'
 
 import { Button, buttonVariants } from './button'
-import { CaptionButton } from './caption'
 import { inputVariants } from './input'
 import { Popover, PopoverAnchor, PopoverContent } from './popover'
 import { Separator } from './separator'
@@ -77,8 +78,6 @@ export function MediaPopover({ children, plugin }: MediaPopoverProps) {
             >
               Edit link
             </FloatingMediaPrimitive.EditButton>
-
-            <CaptionButton variant="ghost">Caption</CaptionButton>
 
             <Separator orientation="vertical" className="mx-1 h-6" />
 

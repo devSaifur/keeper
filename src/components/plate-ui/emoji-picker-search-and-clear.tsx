@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@udecode/cn'
 import type { UseEmojiPickerType } from '@udecode/plate-emoji/react'
 

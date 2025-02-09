@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback } from 'react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
@@ -24,7 +26,6 @@ import {
 
 export function BlockContextMenu({ children }: { children: React.ReactNode }) {
   const { api, editor } = useEditorPlugin(BlockMenuPlugin)
-
   const isTouch = useIsTouchDevice()
 
   const handleTurnInto = useCallback(

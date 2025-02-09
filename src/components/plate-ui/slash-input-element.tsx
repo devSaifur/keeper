@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { withRef } from '@udecode/cn'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
@@ -31,7 +33,7 @@ import {
 import {
   insertBlock,
   insertInlineElement
-} from '@/components/editor/transforms'
+} from '@/components/editor/transformers'
 
 import {
   InlineCombobox,
@@ -52,9 +54,9 @@ type Group = {
 interface Item {
   icon: React.ReactNode
 
-  onSelect: (editor: PlateEditor, value: string) => void
-
   value: string
+
+  onSelect: (editor: PlateEditor, value: string) => void
   className?: string
   focusEditor?: boolean
   keywords?: string[]

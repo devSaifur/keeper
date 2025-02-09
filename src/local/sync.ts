@@ -1,6 +1,6 @@
 import { toast } from 'sonner'
 
-import { api } from '@/lib/api'
+import { api } from '@/lib/api-client'
 
 import db from './db'
 import type { Note } from './db'

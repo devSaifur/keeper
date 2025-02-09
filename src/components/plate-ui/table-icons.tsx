@@ -1,3 +1,5 @@
+'use client'
+
 import type { LucideProps } from 'lucide-react'
 
 export const BorderAll = (props: LucideProps) => (

@@ -1,4 +1,6 @@
-import { type ComponentPropsWithoutRef } from 'react'
+'use client'
+
+import React, { type ComponentPropsWithoutRef } from 'react'
 import { cn } from '@udecode/cn'
 import {
   useColorsCustom,
@@ -12,7 +14,6 @@ import {
   type TColor
 } from './color-dropdown-menu-items'
 import { ColorInput } from './color-input'
-// import { ColorInput } from './color-input';
 import { DropdownMenuItem } from './dropdown-menu'
 
 type ColorCustomProps = {

@@ -1,9 +1,11 @@
+'use client'
+
+import React from 'react'
 import { cn, withRef } from '@udecode/cn'
 import { Image, ImagePlugin, useMediaState } from '@udecode/plate-media/react'
-import { ResizableProvider, useResizableValue } from '@udecode/plate-resizable'
+import { ResizableProvider } from '@udecode/plate-resizable'
 import { withHOC } from '@udecode/plate/react'
 
-import { Caption, CaptionTextarea } from './caption'
 import { MediaPopover } from './media-popover'
 import { PlateElement } from './plate-element'
 import { mediaResizeHandleVariants, Resizable, ResizeHandle } from './resizable'
@@ -13,8 +15,6 @@ export const ImageElement = withHOC(
   withRef<typeof PlateElement>(
     ({ children, className, nodeProps, ...props }, ref) => {
       const { align = 'center', focused, readOnly, selected } = useMediaState()
-
-      const width = useResizableValue('width')
 
       return (
         <MediaPopover plugin={ImagePlugin}>
@@ -51,16 +51,6 @@ export const ImageElement = withHOC(
                   options={{ direction: 'right' }}
                 />
               </Resizable>
-
-              <Caption style={{ width }} align={align}>
-                <CaptionTextarea
-                  readOnly={readOnly}
-                  onFocus={(e) => {
-                    e.preventDefault()
-                  }}
-                  placeholder="Write a caption..."
-                />
-              </Caption>
             </figure>
 
             {children}

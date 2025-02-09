@@ -1,3 +1,5 @@
+'use client'
+
 import { cn, withRef } from '@udecode/cn'
 import { useTocElement, useTocElementState } from '@udecode/plate-heading/react'
 import { cva } from 'class-variance-authority'

@@ -11,7 +11,6 @@ import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react'
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list'
 import { LinkPlugin } from '@udecode/plate-link/react'
 import { EquationPlugin, InlineEquationPlugin } from '@udecode/plate-math/react'
-import { ImagePlugin, MediaEmbedPlugin } from '@udecode/plate-media/react'
 import { TablePlugin } from '@udecode/plate-table/react'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
 import {
@@ -143,26 +142,6 @@ const groups: Group[] = [
         icon: <ChevronRightIcon />,
         label: 'Toggle list',
         value: TogglePlugin.key
-      }
-    ].map((item) => ({
-      ...item,
-      onSelect: (editor, value) => {
-        insertBlock(editor, value)
-      }
-    }))
-  },
-  {
-    group: 'Media',
-    items: [
-      {
-        icon: <ImageIcon />,
-        label: 'Image',
-        value: ImagePlugin.key
-      },
-      {
-        icon: <FilmIcon />,
-        label: 'Embed',
-        value: MediaEmbedPlugin.key
       }
     ].map((item) => ({
       ...item,

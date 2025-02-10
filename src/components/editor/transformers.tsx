@@ -22,19 +22,6 @@ import { LinkPlugin, triggerFloatingLink } from '@udecode/plate-link/react'
 import { insertEquation, insertInlineEquation } from '@udecode/plate-math'
 import { EquationPlugin, InlineEquationPlugin } from '@udecode/plate-math/react'
 import {
-  insertAudioPlaceholder,
-  insertFilePlaceholder,
-  insertMedia,
-  insertVideoPlaceholder
-} from '@udecode/plate-media'
-import {
-  AudioPlugin,
-  FilePlugin,
-  ImagePlugin,
-  MediaEmbedPlugin,
-  VideoPlugin
-} from '@udecode/plate-media/react'
-import {
   TableCellPlugin,
   TablePlugin,
   TableRowPlugin
@@ -70,27 +57,12 @@ const insertBlockMap: Record<
   [ListStyleType.Disc]: insertList,
   [ACTION_THREE_COLUMNS]: (editor) =>
     insertColumnGroup(editor, { columns: 3, select: true }),
-  [AudioPlugin.key]: (editor) =>
-    insertAudioPlaceholder(editor, { select: true }),
   [CalloutPlugin.key]: (editor) => insertCallout(editor, { select: true }),
   [CodeBlockPlugin.key]: (editor) => insertCodeBlock(editor, { select: true }),
   [EquationPlugin.key]: (editor) => insertEquation(editor, { select: true }),
-  [FilePlugin.key]: (editor) => insertFilePlaceholder(editor, { select: true }),
-  [ImagePlugin.key]: (editor) =>
-    insertMedia(editor, {
-      select: true,
-      type: ImagePlugin.key
-    }),
-  [MediaEmbedPlugin.key]: (editor) =>
-    insertMedia(editor, {
-      select: true,
-      type: MediaEmbedPlugin.key
-    }),
   [TablePlugin.key]: (editor) =>
     editor.getTransforms(TablePlugin).insert.table({}, { select: true }),
-  [TocPlugin.key]: (editor) => insertToc(editor, { select: true }),
-  [VideoPlugin.key]: (editor) =>
-    insertVideoPlaceholder(editor, { select: true })
+  [TocPlugin.key]: (editor) => insertToc(editor, { select: true })
 }
 
 const insertInlineMap: Record<

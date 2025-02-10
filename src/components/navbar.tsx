@@ -24,14 +24,17 @@ export const Navbar = () => {
     await db.notes.clear()
     await db.deletedNotes.clear()
     await signOut()
-    router.push('/login')
+    router.refresh()
   }
 
   return (
     <header className="sticky top-0 z-50 border-b border-muted-foreground/50 bg-background py-1 shadow transition-colors md:py-2">
       <div className="mx-auto max-w-7xl px-4 py-2">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div
+            onClick={() => router.push('/')}
+            className="flex cursor-pointer items-center space-x-2"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 48 48"

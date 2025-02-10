@@ -2,7 +2,7 @@ import tailwindTypography from '@tailwindcss/typography'
 import scrollbarHide from 'tailwind-scrollbar-hide'
 import type { Config } from 'tailwindcss'
 import tailwindAnimate from 'tailwindcss-animate'
-import * as tailwindMotion from 'tailwindcss-motion'
+import tailwindMotion from 'tailwindcss-motion'
 import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { getNotesFromServerAndSaveToDB } from '@/local/sync'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -25,7 +25,7 @@ export default function LoginPage() {
   const router = useRouter()
 
   const { register, formState, handleSubmit } = useForm<TSignInSchema>({
-    resolver: zodResolver(signInSchema),
+    resolver: standardSchemaResolver(signInSchema),
     defaultValues: {
       email: '',
       password: ''

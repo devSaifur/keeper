@@ -32,7 +32,6 @@ import { exitBreakPlugin } from './exit-break-plugin'
 import { indentListPlugins } from './indent-list-plugins'
 import { lineHeightPlugin } from './line-height-plugin'
 import { linkPlugin } from './link-plugin'
-import { mediaPlugins } from './media-plugins'
 import { resetBlockTypePlugin } from './reset-block-type-plugin'
 import { softBreakPlugin } from './soft-break-plugin'
 import { tablePlugin } from './table-plugin'
@@ -46,7 +45,6 @@ export const viewPlugins = [
   tablePlugin,
   TogglePlugin,
   tocPlugin,
-  ...mediaPlugins,
   ...equationPlugins,
   CalloutPlugin,
   ColumnPlugin,

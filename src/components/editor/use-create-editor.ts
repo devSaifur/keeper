@@ -24,14 +24,6 @@ import { KbdPlugin } from '@udecode/plate-kbd/react'
 import { ColumnItemPlugin, ColumnPlugin } from '@udecode/plate-layout/react'
 import { LinkPlugin } from '@udecode/plate-link/react'
 import { EquationPlugin, InlineEquationPlugin } from '@udecode/plate-math/react'
-import {
-  AudioPlugin,
-  FilePlugin,
-  ImagePlugin,
-  MediaEmbedPlugin,
-  PlaceholderPlugin,
-  VideoPlugin
-} from '@udecode/plate-media/react'
 import { SlashInputPlugin } from '@udecode/plate-slash-command/react'
 import {
   TableCellHeaderPlugin,
@@ -62,15 +54,9 @@ import { EquationElement } from '@/components/plate-ui/equation-element'
 import { HeadingElement } from '@/components/plate-ui/heading-element'
 import { HighlightLeaf } from '@/components/plate-ui/highlight-leaf'
 import { HrElement } from '@/components/plate-ui/hr-element'
-import { ImageElement } from '@/components/plate-ui/image-element'
 import { InlineEquationElement } from '@/components/plate-ui/inline-equation-element'
 import { KbdLeaf } from '@/components/plate-ui/kbd-leaf'
 import { LinkElement } from '@/components/plate-ui/link-element'
-import { MediaAudioElement } from '@/components/plate-ui/media-audio-element'
-import { MediaEmbedElement } from '@/components/plate-ui/media-embed-element'
-import { MediaFileElement } from '@/components/plate-ui/media-file-element'
-import { MediaPlaceholderElement } from '@/components/plate-ui/media-placeholder-element'
-import { MediaVideoElement } from '@/components/plate-ui/media-video-element'
 import { ParagraphElement } from '@/components/plate-ui/paragraph-element'
 import { SlashInputElement } from '@/components/plate-ui/slash-input-element'
 import {
@@ -86,7 +72,6 @@ export const useCreateEditor = () => {
   return usePlateEditor({
     override: {
       components: {
-        [AudioPlugin.key]: MediaAudioElement,
         [BlockquotePlugin.key]: BlockquoteElement,
         [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
         [CodeBlockPlugin.key]: CodeBlockElement,
@@ -98,7 +83,6 @@ export const useCreateEditor = () => {
         [DatePlugin.key]: DateElement,
         [EmojiInputPlugin.key]: EmojiInputElement,
         [EquationPlugin.key]: EquationElement,
-        [FilePlugin.key]: MediaFileElement,
         [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
         [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
         [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
@@ -107,14 +91,11 @@ export const useCreateEditor = () => {
         [HEADING_KEYS.h6]: withProps(HeadingElement, { variant: 'h6' }),
         [HighlightPlugin.key]: HighlightLeaf,
         [HorizontalRulePlugin.key]: HrElement,
-        [ImagePlugin.key]: ImageElement,
         [InlineEquationPlugin.key]: InlineEquationElement,
         [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
         [KbdPlugin.key]: KbdLeaf,
         [LinkPlugin.key]: LinkElement,
-        [MediaEmbedPlugin.key]: MediaEmbedElement,
         [ParagraphPlugin.key]: ParagraphElement,
-        [PlaceholderPlugin.key]: MediaPlaceholderElement,
         [SlashInputPlugin.key]: SlashInputElement,
         [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
         [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
@@ -125,8 +106,7 @@ export const useCreateEditor = () => {
         [TableRowPlugin.key]: TableRowElement,
         [TocPlugin.key]: TocElement,
         [TogglePlugin.key]: ToggleElement,
-        [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
-        [VideoPlugin.key]: MediaVideoElement
+        [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' })
       }
     },
     plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin]

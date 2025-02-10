@@ -1,8 +1,9 @@
 'use client'
 
-import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 
+import { useSession } from '@/lib/auth-client'
 import {
   Card,
   CardContent,
@@ -20,6 +21,13 @@ const Notes = dynamic(() => import('@/components/notes'), {
 const AddNote = dynamic(() => import('@/components/add-note'), { ssr: false })
 
 export default function Home() {
+  const router = useRouter()
+  const { data, isPending } = useSession()
+
+  if (!data?.user && !isPending) {
+    router.push('/login')
+  }
+
   return (
     <main className="relative p-2">
       <Notes />

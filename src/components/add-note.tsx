@@ -6,14 +6,17 @@ import { Plate } from '@udecode/plate/react'
 import { PlusIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import { useCreateEditor } from '@/components/editor/use-create-editor'
 import { Editor, EditorContainer } from '@/components/plate-ui/editor'
 
@@ -33,8 +36,8 @@ const AddNote = () => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger
+    <Sheet>
+      <SheetTrigger
         asChild
         className={cn(
           buttonVariants({ variant: 'default' }),
@@ -42,10 +45,15 @@ const AddNote = () => {
         )}
       >
         <PlusIcon className="size-14 text-background" />
-      </DialogTrigger>
-      <DialogContent className="min-w-max pb-4 pt-12">
-        <DialogTitle className="sr-only">Add Note</DialogTitle>
-        <div className="mx-auto flex w-full max-w-min flex-col gap-y-3">
+      </SheetTrigger>
+      <SheetContent className="min-w-[72vw]">
+        <SheetHeader>
+          <SheetTitle>Add Note</SheetTitle>
+          <SheetDescription>
+            Take a note and save it to your notes.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="min-w-max pb-4 pt-12">
           <Plate editor={editor}>
             <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
               <Editor
@@ -57,16 +65,15 @@ const AddNote = () => {
             </EditorContainer>
           </Plate>
         </div>
-
-        <DialogClose
-          type="button"
-          onClick={handleSave}
-          className={cn(buttonVariants({ variant: 'default' }), 'ml-auto')}
-        >
-          Save
-        </DialogClose>
-      </DialogContent>
-    </Dialog>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button onClick={handleSave} type="submit">
+              Save
+            </Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   )
 }
 

@@ -101,7 +101,7 @@
     "drizzle-kit": "^0.30.4",
     "eslint": "^9.20.0",
     "eslint-config-next": "15.1.6",
-    "postcss": "^8.5.1",
+    "postcss": "^8.5.2",
     "prettier": "^3.5.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwind-scrollbar-hide": "^2.0.0",

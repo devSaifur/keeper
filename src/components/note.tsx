@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { editToDB } from '@/local/sync'
 import { deserializeMd } from '@udecode/plate-markdown'
 import { Plate } from '@udecode/plate/react'
@@ -29,7 +30,13 @@ interface NoteProps {
 
 export const Note = ({ note }: NoteProps) => {
   const editor = useCreateEditor()
-  editor.tf.setValue(deserializeMd(editor, note.content))
+
+  useEffect(() => {
+    if (editor && note.content) {
+      const deserialized = deserializeMd(editor, note.content)
+      editor.children = deserialized
+    }
+  }, [editor, note.content])
 
   async function handleUpdate() {
     const value = editor.api.markdown.serialize()

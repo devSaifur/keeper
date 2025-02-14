@@ -1,4 +1,7 @@
+'use client'
+
 import { withProps } from '@udecode/cn'
+import type { Value } from '@udecode/plate'
 import {
   BoldPlugin,
   CodePlugin,
@@ -35,12 +38,10 @@ import { TogglePlugin } from '@udecode/plate-toggle/react'
 import {
   ParagraphPlugin,
   PlateLeaf,
-  usePlateEditor
+  usePlateEditor,
+  type CreatePlateEditorOptions
 } from '@udecode/plate/react'
 
-import { editorPlugins } from '@/components/editor/plugins/editor-plugins'
-import { FixedToolbarPlugin } from '@/components/editor/plugins/fixed-toolbar-plugin'
-import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin'
 import { BlockquoteElement } from '@/components/plate-ui/blockquote-element'
 import { CodeBlockElement } from '@/components/plate-ui/code-block-element'
 import { CodeLeaf } from '@/components/plate-ui/code-leaf'
@@ -68,47 +69,75 @@ import { TableRowElement } from '@/components/plate-ui/table-row-element'
 import { TocElement } from '@/components/plate-ui/toc-element'
 import { ToggleElement } from '@/components/plate-ui/toggle-element'
 
-export const useCreateEditor = () => {
-  return usePlateEditor({
-    override: {
-      components: {
-        [BlockquotePlugin.key]: BlockquoteElement,
-        [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
-        [CodeBlockPlugin.key]: CodeBlockElement,
-        [CodeLinePlugin.key]: CodeLineElement,
-        [CodePlugin.key]: CodeLeaf,
-        [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
-        [ColumnItemPlugin.key]: ColumnElement,
-        [ColumnPlugin.key]: ColumnGroupElement,
-        [DatePlugin.key]: DateElement,
-        [EmojiInputPlugin.key]: EmojiInputElement,
-        [EquationPlugin.key]: EquationElement,
-        [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
-        [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
-        [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
-        [HEADING_KEYS.h4]: withProps(HeadingElement, { variant: 'h4' }),
-        [HEADING_KEYS.h5]: withProps(HeadingElement, { variant: 'h5' }),
-        [HEADING_KEYS.h6]: withProps(HeadingElement, { variant: 'h6' }),
-        [HighlightPlugin.key]: HighlightLeaf,
-        [HorizontalRulePlugin.key]: HrElement,
-        [InlineEquationPlugin.key]: InlineEquationElement,
-        [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
-        [KbdPlugin.key]: KbdLeaf,
-        [LinkPlugin.key]: LinkElement,
-        [ParagraphPlugin.key]: ParagraphElement,
-        [SlashInputPlugin.key]: SlashInputElement,
-        [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
-        [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
-        [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: 'sup' }),
-        [TableCellHeaderPlugin.key]: TableCellHeaderElement,
-        [TableCellPlugin.key]: TableCellElement,
-        [TablePlugin.key]: TableElement,
-        [TableRowPlugin.key]: TableRowElement,
-        [TocPlugin.key]: TocElement,
-        [TogglePlugin.key]: ToggleElement,
-        [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' })
-      }
+import { editorPlugins, viewPlugins } from './plugins/editor-plugins'
+
+export const viewComponents = {
+  [BlockquotePlugin.key]: BlockquoteElement,
+  [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
+  [CodeBlockPlugin.key]: CodeBlockElement,
+  [CodeLinePlugin.key]: CodeLineElement,
+  [CodePlugin.key]: CodeLeaf,
+  [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
+  [ColumnItemPlugin.key]: ColumnElement,
+  [ColumnPlugin.key]: ColumnGroupElement,
+  [DatePlugin.key]: DateElement,
+  [EquationPlugin.key]: EquationElement,
+  [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
+  [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
+  [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
+  [HEADING_KEYS.h4]: withProps(HeadingElement, { variant: 'h4' }),
+  [HEADING_KEYS.h5]: withProps(HeadingElement, { variant: 'h5' }),
+  [HEADING_KEYS.h6]: withProps(HeadingElement, { variant: 'h6' }),
+  [HighlightPlugin.key]: HighlightLeaf,
+  [HorizontalRulePlugin.key]: HrElement,
+  [InlineEquationPlugin.key]: InlineEquationElement,
+  [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
+  [KbdPlugin.key]: KbdLeaf,
+  [LinkPlugin.key]: LinkElement,
+  [ParagraphPlugin.key]: ParagraphElement,
+  [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
+  [SubscriptPlugin.key]: withProps(PlateLeaf, { as: 'sub' }),
+  [SuperscriptPlugin.key]: withProps(PlateLeaf, { as: 'sup' }),
+  [TableCellHeaderPlugin.key]: TableCellHeaderElement,
+  [TableCellPlugin.key]: TableCellElement,
+  [TablePlugin.key]: TableElement,
+  [TableRowPlugin.key]: TableRowElement,
+  [TocPlugin.key]: TocElement,
+  [TogglePlugin.key]: ToggleElement,
+  [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' })
+}
+
+export const editorComponents = {
+  ...viewComponents,
+  [EmojiInputPlugin.key]: EmojiInputElement,
+  [SlashInputPlugin.key]: SlashInputElement
+}
+
+export const useCreateEditor = (
+  {
+    components,
+    override,
+    readOnly,
+    ...options
+  }: {
+    components?: Record<string, any>
+    plugins?: any[]
+    readOnly?: boolean
+  } & Omit<CreatePlateEditorOptions, 'plugins'> = {},
+  deps: any[] = []
+) => {
+  return usePlateEditor<Value, (typeof editorPlugins)[number]>(
+    {
+      override: {
+        components: {
+          ...(readOnly ? viewComponents : editorComponents),
+          ...components
+        },
+        ...override
+      },
+      plugins: (readOnly ? viewPlugins : editorPlugins) as any,
+      ...options
     },
-    plugins: [...editorPlugins, FixedToolbarPlugin, FloatingToolbarPlugin]
-  })
+    deps
+  )
 }

@@ -11,6 +11,7 @@ import {
 } from '@udecode/plate-font/react'
 import { HighlightPlugin } from '@udecode/plate-highlight/react'
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react'
+import { JuicePlugin } from '@udecode/plate-juice'
 import { KbdPlugin } from '@udecode/plate-kbd/react'
 import { ColumnPlugin } from '@udecode/plate-layout/react'
 import { MarkdownPlugin } from '@udecode/plate-markdown'
@@ -80,6 +81,7 @@ export const editorPlugins = [
 
   // Deserialization
   MarkdownPlugin.configure({ options: { indentList: true } }),
+  JuicePlugin,
 
   // UI
   FixedToolbarPlugin,

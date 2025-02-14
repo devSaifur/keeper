@@ -24,10 +24,10 @@ const AddNote = () => {
   const editor = useCreateEditor()
 
   async function handleSave() {
-    const value = editor.api.markdown.serialize()
+    const value = editor.children
     const note = {
       id: crypto.randomUUID(),
-      content: value,
+      content: JSON.stringify(value),
       createdAt: new Date().toISOString(),
       syncStatus: 'pending',
       serverId: ''

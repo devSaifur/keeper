@@ -1,6 +1,5 @@
 'use client'
 
-import db from '@/local/db'
 import { editToDB } from '@/local/sync'
 
 import { cn } from '@/lib/utils'
@@ -23,6 +22,7 @@ interface NoteProps {
   note: {
     id: string
     content: string
+    lastModified: Date
   }
 }
 
@@ -32,7 +32,8 @@ export const Note = ({ note }: NoteProps) => {
   async function handleUpdate() {
     const value = editor.children
     if (!value) return
-    await editToDB(note.id, JSON.stringify(value))
+    const newContent = JSON.stringify(value)
+    await editToDB(note.id, newContent)
   }
 
   return (
@@ -40,7 +41,10 @@ export const Note = ({ note }: NoteProps) => {
       <DialogTrigger asChild>
         <Card className="group relative h-36 overflow-hidden rounded-md bg-card/20 transition-shadow duration-200 hover:shadow-lg md:h-44">
           <CardContent className="py-4">
-            <NotePreview noteContent={note.content} />
+            <NotePreview
+              noteContent={note.content}
+              key={note.lastModified.toISOString()}
+            />
           </CardContent>
           <CardFooter className="invisible absolute bottom-0 right-0 justify-end group-hover:visible">
             <ConfirmDelete noteId={note.id} />

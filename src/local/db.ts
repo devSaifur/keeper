@@ -10,9 +10,8 @@ export interface Note {
     | 'addError'
     | 'updateError'
     | 'deleteError'
-  lastModified: string
+  lastModified: Date
   serverId?: string
-  createdAt: string
 }
 
 export interface DeletedNote {

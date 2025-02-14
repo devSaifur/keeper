@@ -35,12 +35,12 @@ async function addNotesSync() {
               .modify({
                 syncStatus: 'synced',
                 serverId: syncedNote.serverId as string,
-                lastModified: new Date().toISOString()
+                lastModified: new Date()
               })
           } else {
             await db.notes.where('id').equals(syncedNote.noteId).modify({
               syncStatus: 'addError',
-              lastModified: new Date().toISOString()
+              lastModified: new Date()
             })
           }
         })
@@ -59,14 +59,8 @@ async function deleteNotesSync() {
     .filter((note) => note.syncStatus === 'pending')
     .map((note) => note.id)
 
-  try {
-    const res = await api.notes.$delete({ json: pendingDeleteNotes })
-    if (res.ok) {
-      await db.deletedNotes.bulkDelete(pendingDeleteNotes)
-    }
-  } catch (err) {
-    console.error(err)
-  }
+  await api.notes.$delete({ json: pendingDeleteNotes })
+  await db.deletedNotes.bulkDelete(pendingDeleteNotes)
 }
 
 async function updateNoteSync() {
@@ -94,12 +88,12 @@ async function updateNoteSync() {
             await db.notes.where('id').equals(syncedNote.noteId).modify({
               syncStatus: 'synced',
               serverId: syncedNote.serverId,
-              lastModified: new Date().toISOString()
+              lastModified: new Date()
             })
           } else {
             await db.notes.where('id').equals(syncedNote.noteId).modify({
               syncStatus: 'updateError',
-              lastModified: new Date().toISOString()
+              lastModified: new Date()
             })
           }
         })

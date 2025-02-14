@@ -14,10 +14,10 @@ export async function deleteFromDB(id: string) {
 }
 
 export async function editToDB(id: string, content: string) {
-  await db.notes.where('id').equals(id).modify({
+  await db.notes.update(id, {
     content,
     syncStatus: 'update',
-    lastModified: new Date().toISOString()
+    lastModified: new Date()
   })
 }
 
@@ -49,7 +49,7 @@ export async function getNotesFromServerAndSaveToDB() {
       content: note.content,
       syncStatus: 'synced',
       serverId: note.id,
-      createdAt: note.cratedAt
+      lastModified: new Date()
     }))
 
     await db.notes.clear()

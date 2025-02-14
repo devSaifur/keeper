@@ -28,11 +28,12 @@ const AddNote = () => {
     const note = {
       id: crypto.randomUUID(),
       content: JSON.stringify(value),
-      createdAt: new Date().toISOString(),
       syncStatus: 'pending',
+      lastModified: new Date(),
       serverId: ''
     } as Note
     await saveToDB(note)
+    editor.tf.reset()
   }
 
   return (

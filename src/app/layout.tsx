@@ -3,7 +3,6 @@ import { Geist } from 'next/font/google'
 
 import './globals.css'
 
-import BackgroundWorker from '@/components/background-sync'
 import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
 
@@ -28,7 +27,6 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
-          <BackgroundWorker />
         </Providers>
       </body>
     </html>

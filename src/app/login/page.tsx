@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { getNotesFromServerAndSaveToDB } from '@/local/sync'
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -42,7 +41,6 @@ export default function LoginPage() {
       },
       {
         onSuccess: async () => {
-          await getNotesFromServerAndSaveToDB()
           toast.success('Logged in successfully')
           router.push('/')
         },

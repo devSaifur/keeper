@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
@@ -13,6 +12,7 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import BackgroundSync from '@/components/background-sync'
 
 const Notes = dynamic(() => import('@/components/notes'), {
   ssr: false,
@@ -33,6 +33,7 @@ export default function Home() {
     <main className="relative p-2">
       <Notes />
       <AddNote />
+      <BackgroundSync />
     </main>
   )
 }

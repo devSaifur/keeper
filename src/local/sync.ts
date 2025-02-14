@@ -1,7 +1,3 @@
-import { toast } from 'sonner'
-
-import { api } from '@/lib/api-client'
-
 import db from './db'
 import type { Note } from './db'
 
@@ -33,31 +29,4 @@ export async function addToDeletedNotes(note: Note) {
 
 export async function getNoteById(id: string) {
   return db.notes.get(id)
-}
-
-export async function getNotesFromServerAndSaveToDB() {
-  try {
-    const res = await api.notes.$get()
-    if (!res.ok) {
-      throw new Error('Something went wrong getting notes!')
-    }
-
-    const notes = await res.json()
-
-    const notesToSave = notes.map((note) => ({
-      id: crypto.randomUUID(),
-      content: note.content,
-      syncStatus: 'synced',
-      serverId: note.id,
-      lastModified: new Date()
-    }))
-
-    await db.notes.clear()
-    await db.notes.bulkAdd(notesToSave as Note[])
-  } catch (err) {
-    console.error(err)
-    toast.error(
-      'Something went wrong getting notes!, please try syncing manually'
-    )
-  }
 }

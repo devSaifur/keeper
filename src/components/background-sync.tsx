@@ -1,11 +1,50 @@
 'use client'
 
 import { useEffect } from 'react'
-import db from '@/local/db'
+import db, { Note } from '@/local/db'
+import { toast } from 'sonner'
 
 import { api } from '@/lib/api-client'
 
 const SYNC_INTERVAL = 10000
+
+async function initNotes() {
+  try {
+    const res = await api.notes.$get()
+    if (!res.ok) {
+      throw new Error('Something went wrong getting notes!')
+    }
+
+    const notes = await res.json()
+
+    const notesToSave = notes.map((note) => ({
+      id: crypto.randomUUID(),
+      content: note.content,
+      syncStatus: 'synced',
+      serverId: note.id,
+      lastModified: new Date()
+    }))
+
+    // filer out the notes that already exist in the database
+    const existingNotes = await db.notes.toArray()
+    notesToSave.forEach((note) => {
+      const existingNote = existingNotes.find(
+        (existingNote) => existingNote.id === note.serverId
+      )
+      if (existingNote) {
+        notesToSave.splice(notesToSave.indexOf(note), 1)
+      }
+    })
+
+    // add the notes that don't exist in the database
+    await db.notes.bulkAdd(notesToSave as Note[])
+  } catch (err) {
+    console.error(err)
+    toast.error(
+      'Something went wrong getting notes!, please try syncing manually'
+    )
+  }
+}
 
 async function addNotesSync() {
   const notes = await db.notes.toArray()
@@ -105,6 +144,8 @@ async function updateNoteSync() {
 }
 
 export default function BackgroundSync() {
+  initNotes()
+
   useEffect(() => {
     // Define interval IDs for each sync operation
     const addNotesIntervalId = setInterval(addNotesSync, SYNC_INTERVAL)

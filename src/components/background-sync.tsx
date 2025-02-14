@@ -17,24 +17,20 @@ async function initNotes() {
 
     const notes = await res.json()
 
-    const notesToSave = notes.map((note) => ({
-      id: crypto.randomUUID(),
-      content: note.content,
-      syncStatus: 'synced',
-      serverId: note.id,
-      lastModified: new Date()
-    }))
-
-    // filer out the notes that already exist in the database
     const existingNotes = await db.notes.toArray()
-    notesToSave.forEach((note) => {
-      const existingNote = existingNotes.find(
-        (existingNote) => existingNote.id === note.serverId
-      )
-      if (existingNote) {
-        notesToSave.splice(notesToSave.indexOf(note), 1)
-      }
-    })
+    const existingServerIds = new Set(
+      existingNotes.map((note) => note.serverId)
+    )
+
+    const notesToSave = notes
+      .filter((note) => !existingServerIds.has(note.id))
+      .map((note) => ({
+        id: crypto.randomUUID(),
+        content: note.content,
+        syncStatus: 'synced',
+        serverId: note.id,
+        lastModified: new Date()
+      }))
 
     // add the notes that don't exist in the database
     await db.notes.bulkAdd(notesToSave as Note[])

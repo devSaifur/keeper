@@ -25,6 +25,7 @@ const AddNote = () => {
 
   async function handleSave() {
     const value = editor.children
+    if (!value) return
     const note = {
       id: crypto.randomUUID(),
       content: JSON.stringify(value),
@@ -47,22 +48,17 @@ const AddNote = () => {
       >
         <PlusIcon className="size-14 text-background" />
       </SheetTrigger>
-      <SheetContent className="min-w-[72vw]">
+      <SheetContent className="min-w-[65vw]">
         <SheetHeader>
           <SheetTitle>Add Note</SheetTitle>
           <SheetDescription>
             Take a note and save it to your notes.
           </SheetDescription>
         </SheetHeader>
-        <div className="min-w-max pb-4 pt-12">
+        <div className="min-w-max pb-4 pt-6">
           <Plate editor={editor}>
-            <EditorContainer className="mx-auto max-h-96 min-w-[42rem] rounded-sm border border-accent">
-              <Editor
-                variant="none"
-                placeholder="Take a note..."
-                className="max-h-screen min-h-80 p-4"
-                autoFocus
-              />
+            <EditorContainer className="mx-auto rounded-sm border border-accent">
+              <Editor variant="none" className="h-[72dvh] p-4" autoFocus />
             </EditorContainer>
           </Plate>
         </div>

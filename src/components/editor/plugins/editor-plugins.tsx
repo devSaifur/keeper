@@ -1,9 +1,7 @@
 'use client'
 
-import emojiMartData from '@emoji-mart/data'
 import { CalloutPlugin } from '@udecode/plate-callout/react'
 import { DatePlugin } from '@udecode/plate-date/react'
-import { EmojiPlugin } from '@udecode/plate-emoji/react'
 import {
   FontBackgroundColorPlugin,
   FontColorPlugin,
@@ -72,7 +70,6 @@ export const editorPlugins = [
   autoformatPlugin,
   cursorOverlayPlugin,
   ...blockMenuPlugins,
-  EmojiPlugin.configure({ options: { data: emojiMartData as any } }),
   exitBreakPlugin,
   resetBlockTypePlugin,
   ...deletePlugins,

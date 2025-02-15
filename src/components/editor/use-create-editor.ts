@@ -18,7 +18,6 @@ import {
   CodeSyntaxPlugin
 } from '@udecode/plate-code-block/react'
 import { DatePlugin } from '@udecode/plate-date/react'
-import { EmojiInputPlugin } from '@udecode/plate-emoji/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { TocPlugin } from '@udecode/plate-heading/react'
 import { HighlightPlugin } from '@udecode/plate-highlight/react'
@@ -50,7 +49,6 @@ import { CodeSyntaxLeaf } from '@/components/plate-ui/code-syntax-leaf'
 import { ColumnElement } from '@/components/plate-ui/column-element'
 import { ColumnGroupElement } from '@/components/plate-ui/column-group-element'
 import { DateElement } from '@/components/plate-ui/date-element'
-import { EmojiInputElement } from '@/components/plate-ui/emoji-input-element'
 import { EquationElement } from '@/components/plate-ui/equation-element'
 import { HeadingElement } from '@/components/plate-ui/heading-element'
 import { HighlightLeaf } from '@/components/plate-ui/highlight-leaf'
@@ -109,7 +107,6 @@ export const viewComponents = {
 
 export const editorComponents = {
   ...viewComponents,
-  [EmojiInputPlugin.key]: EmojiInputElement,
   [SlashInputPlugin.key]: SlashInputElement
 }
 

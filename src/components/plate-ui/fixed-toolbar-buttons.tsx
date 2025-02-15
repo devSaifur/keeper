@@ -30,7 +30,6 @@ import { MoreDropdownMenu } from '@/components/plate-ui/more-dropdown-menu'
 
 import { AlignDropdownMenu } from './align-dropdown-menu'
 import { ColorDropdownMenu } from './color-dropdown-menu'
-import { EmojiDropdownMenu } from './emoji-dropdown-menu'
 import { FontSizeToolbarButton } from './font-size-toolbar-button'
 import { RedoToolbarButton, UndoToolbarButton } from './history-toolbar-button'
 import {
@@ -41,11 +40,9 @@ import { IndentTodoToolbarButton } from './indent-todo-toolbar-button'
 import { IndentToolbarButton } from './indent-toolbar-button'
 import { InsertDropdownMenu } from './insert-dropdown-menu'
 import { LineHeightDropdownMenu } from './line-height-dropdown-menu'
-import { LinkToolbarButton } from './link-toolbar-button'
 import { MarkToolbarButton } from './mark-toolbar-button'
 import { ModeDropdownMenu } from './mode-dropdown-menu'
 import { OutdentToolbarButton } from './outdent-toolbar-button'
-import { TableDropdownMenu } from './table-dropdown-menu'
 import { ToggleToolbarButton } from './toggle-toolbar-button'
 import { ToolbarGroup } from './toolbar'
 import { TurnIntoDropdownMenu } from './turn-into-dropdown-menu'
@@ -124,12 +121,6 @@ export function FixedToolbarButtons() {
             <BulletedIndentListToolbarButton />
             <IndentTodoToolbarButton />
             <ToggleToolbarButton />
-          </ToolbarGroup>
-
-          <ToolbarGroup>
-            <LinkToolbarButton />
-            <TableDropdownMenu />
-            <EmojiDropdownMenu />
           </ToolbarGroup>
 
           <ToolbarGroup>

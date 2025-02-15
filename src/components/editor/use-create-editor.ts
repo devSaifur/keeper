@@ -84,8 +84,6 @@ export const viewComponents = {
   [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
   [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
   [HEADING_KEYS.h4]: withProps(HeadingElement, { variant: 'h4' }),
-  [HEADING_KEYS.h5]: withProps(HeadingElement, { variant: 'h5' }),
-  [HEADING_KEYS.h6]: withProps(HeadingElement, { variant: 'h6' }),
   [HighlightPlugin.key]: HighlightLeaf,
   [HorizontalRulePlugin.key]: HrElement,
   [InlineEquationPlugin.key]: InlineEquationElement,

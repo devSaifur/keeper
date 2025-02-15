@@ -2,21 +2,23 @@
 
 import { editToDB } from '@/local/sync'
 
-import { cn } from '@/lib/utils'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import { useCreateEditor } from '@/components/editor/use-create-editor'
 
 import { ConfirmDelete } from './confirm-delete'
 import { NotePreview } from './note-preview'
 import { NoteUpdate } from './note-update'
-import { buttonVariants } from './ui/button'
+import { Button } from './ui/button'
 
 interface NoteProps {
   note: {
@@ -37,8 +39,8 @@ export const Note = ({ note }: NoteProps) => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Sheet>
+      <SheetTrigger asChild>
         <Card className="group relative h-36 overflow-hidden rounded-md bg-card/20 transition-shadow duration-200 hover:shadow-lg md:h-44">
           <CardContent className="py-4">
             <NotePreview
@@ -50,18 +52,21 @@ export const Note = ({ note }: NoteProps) => {
             <ConfirmDelete noteId={note.id} />
           </CardFooter>
         </Card>
-      </DialogTrigger>
-      <DialogContent className="min-w-max pb-4 pt-12">
-        <DialogTitle className="sr-only">Update Note</DialogTitle>
-        <NoteUpdate editor={editor} />
-        <DialogClose
-          type="button"
-          onClick={handleUpdate}
-          className={cn(buttonVariants({ variant: 'default' }), 'ml-auto')}
-        >
-          Update
-        </DialogClose>
-      </DialogContent>
-    </Dialog>
+      </SheetTrigger>
+      <SheetContent className="min-w-[65vw]">
+        <SheetHeader>
+          <SheetTitle>Update Note</SheetTitle>
+          <SheetDescription>Edit your note.</SheetDescription>
+        </SheetHeader>
+        <div className="min-w-max pb-4 pt-6">
+          <NoteUpdate editor={editor} />
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button onClick={handleUpdate}>Update</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   )
 }

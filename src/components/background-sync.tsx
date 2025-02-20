@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react'
 import db, { Note } from '@/local/db'
-import { toast } from 'sonner'
 
 import { api } from '@/lib/api-client'
+import { useSession } from '@/lib/auth-client'
 
 const SYNC_INTERVAL = 10000
 
@@ -36,9 +36,6 @@ async function initNotes() {
     await db.notes.bulkAdd(notesToSave as Note[])
   } catch (err) {
     console.error(err)
-    toast.error(
-      'Something went wrong getting notes!, please try syncing manually'
-    )
   }
 }
 
@@ -140,7 +137,11 @@ async function updateNoteSync() {
 }
 
 export default function BackgroundSync() {
-  initNotes()
+  const { data } = useSession()
+
+  if (data?.user) {
+    initNotes()
+  }
 
   useEffect(() => {
     // Define interval IDs for each sync operation

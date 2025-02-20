@@ -26,8 +26,8 @@ export default function LoginPage() {
   const { register, formState, handleSubmit } = useForm<TSignInSchema>({
     resolver: standardSchemaResolver(signInSchema),
     defaultValues: {
-      email: '',
-      password: ''
+      email: 'test@email.com',
+      password: '123456'
     }
   })
 
